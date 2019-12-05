@@ -6,8 +6,10 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pylint = "*"
+expects = "*"
 
 [packages]
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"

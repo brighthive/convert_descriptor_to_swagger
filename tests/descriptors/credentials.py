@@ -1,31 +1,31 @@
-{
+credentials_descriptor = {
     "api": {
       "resource": "credentials",
       "methods": [
         {
           "get": {
-            "enabled": true,
-            "secured": false,
+            "enabled": True,
+            "secured": False,
             "grants": ["get:users"]
           },
           "post": {
-            "enabled": true,
-            "secured": false,
+            "enabled": True,
+            "secured": False,
             "grants": []
           },
           "put": {
-            "enabled": true,
-            "secured": false,
+            "enabled": True,
+            "secured": False,
             "grants": []
           },
           "patch": {
-            "enabled": true,
-            "secured": false,
+            "enabled": True,
+            "secured": False,
             "grants": []
           },
           "delete": {
-            "enabled": true,
-            "secured": false,
+            "enabled": True,
+            "secured": False,
             "grants": []
           }
         }
@@ -41,14 +41,14 @@
             "title": "Credential ID",
             "type": "integer",
             "description": "Credential's unique identifier",
-            "required": false
+            "required": False
           },
           {
             "name": "credential_name",
             "title": "Credential Name",
             "type": "string",
             "description": "Credential's Name",
-            "required": true
+            "required": True
           }
         ],
         "primaryKey": "id"

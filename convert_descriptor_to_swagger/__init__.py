@@ -1,0 +1,1 @@
+from convert_descriptor_to_swagger.main import convert_descriptor_to_swagger
