@@ -1,12 +1,15 @@
 from convert_descriptor_to_swagger.base_tasks import (
     add_metadata,
     add_parameters,
-    add_base_schemas)
+    add_base_schemas,
+    add_base_responses)
 from convert_descriptor_to_swagger.descriptor_tasks import (
     add_schemas_from_descriptor,
     add_request_bodies_from_descriptor,
     add_responses_from_descriptor,
-    add_tags_from_descriptors
+    add_tags_from_descriptors,
+    add_singular_methods,
+    add_plural_methods
     )
 
 
@@ -15,6 +18,7 @@ def convert_descriptor_to_swagger(descriptor: dict) -> dict:
     swag = add_metadata()
     swag = add_parameters(swag)
     swag = add_base_schemas(swag)
+    swag = add_base_responses(swag)
 
     # These items are added for each descriptor -- should take a list to iterate on
     swag = process_descriptor(descriptor, swag)
@@ -45,6 +49,6 @@ def process_descriptor(descriptor: dict, swag: dict) -> dict:
 
     # add the paths
     swag = add_singular_methods(singular_name, swag)
-    # swag = add_plural_methods(singular_name, swag)
+    swag = add_plural_methods(singular_name, swag)
     
     return swag
