@@ -6,7 +6,8 @@ from expects import expect, be_an, raise_error, have_property, equal, be_empty
 import json
 
 
-def load_desc(swagger):
+def _load_desc(swagger):
+    # print(json.dumps(swagger, indent=4))
     expected_output = {
         "openapi": "3.0.0",
         "info": {
@@ -156,7 +157,7 @@ def load_desc(swagger):
 
 
     output = convert_descriptor_to_swagger(credentials_descriptor)
-    print(json.dumps(output, indent=4))
+    # print(json.dumps(output, indent=4))
 
     expect(output).to(equal(expected_output))
     # Final test

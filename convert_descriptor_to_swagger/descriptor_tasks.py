@@ -125,3 +125,72 @@ def add_tags_from_descriptors(name: str, swag: dict) -> dict:
     swag['tags'] = tags
 
     return swag
+
+def add_singular_methods(name: str, swag: dict) -> dict:
+    sentence_case_name = name.capitalize()
+    lower_case_name = name.lower()
+
+    if 'paths' not in swag:
+        swag['paths'] = {}
+
+    if f'{name}' not in swag['paths']:
+        swag['paths'][f'/{name}s'] = {}
+
+    swag['paths'][f'/{name}s'].update({
+        "get": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Get all items",
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/offsetParam"
+                },
+                {
+                    "$ref": "#/components/parameters/limitParam"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": f"#/components/responses/All{sentence_case_name}s"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Create an item",
+            "requestBody": {
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "created",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/responses/Created"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    return swag

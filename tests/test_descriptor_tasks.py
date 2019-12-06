@@ -2,7 +2,8 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     add_schemas_from_descriptor,
     add_request_bodies_from_descriptor,
     add_responses_from_descriptor,
-    add_tags_from_descriptors
+    add_tags_from_descriptors,
+    add_singular_methods
     )
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
@@ -148,3 +149,273 @@ def test_add_tags_from_descriptor_with_items():
         })
 
     expect(swag).to(equal(expected_output))
+
+def test_add_singular_methods():
+    expected_output = {
+        "paths": {
+            "/credentials": {
+                "get": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Get all items",
+                    "parameters": [
+                        {
+                            "$ref": "#/components/parameters/offsetParam"
+                        },
+                        {
+                            "$ref": "#/components/parameters/limitParam"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "ok",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/responses/AllCredentials"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "post": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Create an item",
+                    "requestBody": {
+                        "required": True,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/requestBodies/Credential"
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "created",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/responses/Created"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    swag = add_singular_methods('credential', {})
+
+    expect(swag).to(equal(expected_output))
+
+def _add_plural_methods():
+    expected_output = {
+        "paths": {
+            "/credentials": {
+                "get": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Get all items",
+                    "parameters": [
+                        {
+                            "name": "offset",
+                            "in": "query",
+                            "description": "the offset",
+                            "required": False,
+                            "style": "form",
+                            "explode": True,
+                            "schema": {
+                                "type": "integer"
+                            }
+                        },
+                        {
+                            "name": "limit",
+                            "in": "query",
+                            "description": "the limit",
+                            "required": False,
+                            "style": "form",
+                            "explode": True,
+                            "schema": {
+                                "type": "integer"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "ok",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/responses/AllCredentials"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "post": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Create an item",
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/requestBodies/Credential"
+                                }
+                            }
+                        },
+                        "required": True
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "created",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/responses/Created"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/credentials/{id}": {
+                "get": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Get one item",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "User ID",
+                            "required": True,
+                            "style": "simple",
+                            "explode": False,
+                            "schema": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "ok"
+                        }
+                    }
+                },
+                "put": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Put one item",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "User ID",
+                            "required": True,
+                            "style": "simple",
+                            "explode": False,
+                            "schema": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/requestBodies/Credential"
+                                }
+                            }
+                        },
+                        "required": True
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "ok"
+                        }
+                    }
+                },
+                "delete": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Get one item",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "User ID",
+                            "required": True,
+                            "style": "simple",
+                            "explode": False,
+                            "schema": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "ok"
+                        }
+                    }
+                },
+                "patch": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Get one item",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "User ID",
+                            "required": True,
+                            "style": "simple",
+                            "explode": False,
+                            "schema": {
+                                "type": "integer",
+                                "format": "int64"
+                            }
+                        }
+                    ],
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/requestBodies/Credential"
+                                }
+                            }
+                        },
+                        "required": True
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "ok"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # swag = _add_plural_methods('test', {})
+
+    # expect(swag).to(equal(expected_output))

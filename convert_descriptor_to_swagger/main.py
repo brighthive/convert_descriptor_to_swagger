@@ -44,5 +44,7 @@ def process_descriptor(descriptor: dict, swag: dict) -> dict:
     swag = add_tags_from_descriptors(singular_name, swag)
 
     # add the paths
+    swag = add_singular_methods(singular_name, swag)
+    # swag = add_plural_methods(singular_name, swag)
     
     return swag

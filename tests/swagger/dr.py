@@ -1,8 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Swagger Data Resource",
         "description": "Example Data Resource API swagger file.  You can find\nout more about Swagger at\n[http://swagger.io](http://swagger.io) or on\n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n",
+        "version": "1.0.0",
+        "title": "Swagger Data Resource",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "email": "engineering@brighthive.io"
@@ -10,13 +11,12 @@
         "license": {
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0.0"
+        }
     },
     "servers": [
         {
-            "url": "https://virtserver.swaggerhub.com/loganripplinger/test_dr_swagger/1.0.0",
-            "description": "SwaggerHub API Auto Mocking"
+            "description": "SwaggerHub API Auto Mocking",
+            "url": "https://virtserver.swaggerhub.com/loganripplinger/test_dr_swagger/1.0.0"
         }
     ],
     "tags": [
@@ -42,26 +42,10 @@
                 "summary": "Get all items",
                 "parameters": [
                     {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "the offset",
-                        "required": False,
-                        "style": "form",
-                        "explode": True,
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "$ref": "#/components/parameters/offsetParam"
                     },
                     {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "the limit",
-                        "required": False,
-                        "style": "form",
-                        "explode": True,
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "$ref": "#/components/parameters/limitParam"
                     }
                 ],
                 "responses": {
@@ -83,14 +67,14 @@
                 ],
                 "summary": "Create an item",
                 "requestBody": {
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/requestBodies/Credential"
                             }
                         }
-                    },
-                    "required": True
+                    }
                 },
                 "responses": {
                     "201": {
@@ -107,25 +91,25 @@
             }
         },
         "/credentials/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User ID",
+                    "required": True,
+                    "style": "simple",
+                    "explode": False,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            ],
             "get": {
                 "tags": [
                     "credentials"
                 ],
                 "summary": "Get one item",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User ID",
-                        "required": True,
-                        "style": "simple",
-                        "explode": False,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "ok"
@@ -137,29 +121,36 @@
                     "credentials"
                 ],
                 "summary": "Put one item",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User ID",
-                        "required": True,
-                        "style": "simple",
-                        "explode": False,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
                 "requestBody": {
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "$ref": "#/components/requestBodies/Credential"
                             }
                         }
-                    },
-                    "required": True
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Get one item",
+                "requestBody": {
+                    "required": True,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/requestBodies/Credential"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
@@ -172,55 +163,6 @@
                     "credentials"
                 ],
                 "summary": "Get one item",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User ID",
-                        "required": True,
-                        "style": "simple",
-                        "explode": False,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok"
-                    }
-                }
-            },
-            "patch": {
-                "tags": [
-                    "credentials"
-                ],
-                "summary": "Get one item",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User ID",
-                        "required": True,
-                        "style": "simple",
-                        "explode": False,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/requestBodies/Credential"
-                            }
-                        }
-                    },
-                    "required": True
-                },
                 "responses": {
                     "200": {
                         "description": "ok"
@@ -230,17 +172,38 @@
         }
     },
     "components": {
+        "parameters": {
+            "offsetParam": {
+                "in": "query",
+                "name": "offset",
+                "required": False,
+                "schema": {
+                    "type": "integer"
+                },
+                "description": "the offset"
+            },
+            "limitParam": {
+                "in": "query",
+                "name": "limit",
+                "required": False,
+                "schema": {
+                    "type": "integer"
+                },
+                "description": "the limit"
+            }
+        },
         "schemas": {
             "Credential": {
+                "description": "...",
+                "type": "object",
                 "required": [
                     "name"
                 ],
-                "type": "object",
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "description": "...",
                         "format": "int64",
+                        "description": "...",
                         "example": 1
                     },
                     "name": {
@@ -248,10 +211,10 @@
                         "description": "...",
                         "example": "Credential 1"
                     }
-                },
-                "description": "..."
+                }
             },
             "AllCredentials": {
+                "description": "...",
                 "type": "object",
                 "properties": {
                     "credentials": {
@@ -266,45 +229,57 @@
                             "$ref": "#/components/schemas/Links"
                         }
                     }
-                },
-                "description": "..."
+                }
             },
             "Links": {
+                "description": "...",
                 "type": "object",
                 "properties": {
                     "rel": {
                         "type": "string",
-                        "description": "...",
-                        "example": "first",
                         "enum": [
                             "self",
                             "first",
                             "prev",
                             "next",
                             "last"
-                        ]
+                        ],
+                        "description": "...",
+                        "example": "first"
                     },
                     "href": {
                         "type": "string",
-                        "description": "...",
-                        "example": "/credentials?offset=0&limit=20"
+                        "example": "/credentials?offset=0&limit=20",
+                        "description": "..."
                     }
-                },
-                "description": "..."
+                }
             },
             "Created": {
                 "type": "object",
                 "properties": {
                     "message": {
                         "type": "string",
-                        "description": "...",
-                        "example": "Successfully added new resource."
+                        "example": "Successfully added new resource.",
+                        "description": "..."
                     },
                     "id": {
                         "type": "integer",
-                        "description": "...",
                         "format": "int64",
+                        "description": "...",
                         "example": 1
+                    }
+                }
+            }
+        },
+        "requestBodies": {
+            "Credential": {
+                "description": "Pet object that needs to be added to the store",
+                "required": True,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Credential"
+                        }
                     }
                 }
             }
@@ -329,43 +304,6 @@
                         }
                     }
                 }
-            }
-        },
-        "parameters": {
-            "offsetParam": {
-                "name": "offset",
-                "in": "query",
-                "description": "the offset",
-                "required": False,
-                "style": "form",
-                "explode": True,
-                "schema": {
-                    "type": "integer"
-                }
-            },
-            "limitParam": {
-                "name": "limit",
-                "in": "query",
-                "description": "the limit",
-                "required": False,
-                "style": "form",
-                "explode": True,
-                "schema": {
-                    "type": "integer"
-                }
-            }
-        },
-        "requestBodies": {
-            "Credential": {
-                "description": "Pet object that needs to be added to the store",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": "#/components/schemas/Credential"
-                        }
-                    }
-                },
-                "required": True
             }
         }
     }
