@@ -5,7 +5,9 @@ from convert_descriptor_to_swagger.base_tasks import (
 from convert_descriptor_to_swagger.descriptor_tasks import (
     add_schemas_from_descriptor,
     add_request_bodies_from_descriptor,
-    add_responses_from_descriptor)
+    add_responses_from_descriptor,
+    add_tags_from_descriptors
+    )
 
 
 def convert_descriptor_to_swagger(descriptor: dict) -> dict:
@@ -38,6 +40,9 @@ def process_descriptor(descriptor: dict, swag: dict) -> dict:
     # add responses
     swag = add_responses_from_descriptor(singular_name, swag)
 
-    # add the paths
     # add tags
+    swag = add_tags_from_descriptors(singular_name, swag)
+
+    # add the paths
+    
     return swag

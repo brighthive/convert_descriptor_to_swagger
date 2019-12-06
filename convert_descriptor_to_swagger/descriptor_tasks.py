@@ -102,3 +102,26 @@ def add_responses_from_descriptor(name: str, swag:dict) -> dict:
     })
     
     return swag
+
+def add_tags_from_descriptors(name: str, swag: dict) -> dict:
+    sentence_case_name = name.capitalize()
+
+    if 'tags' not in swag:
+        swag['tags'] = []
+
+    tags = swag['tags']
+
+    tags.append(
+        {
+            "name": f"{sentence_case_name}",
+            "description": "...",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    )
+
+    swag['tags'] = tags
+
+    return swag

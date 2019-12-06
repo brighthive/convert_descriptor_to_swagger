@@ -163,7 +163,7 @@ def load_desc(swagger):
     # expect(output).to(equal(swagger))
 
 
-def process_descriptor():
+def _process_descriptor():
     expected_output = {
         "tags": [
             {
