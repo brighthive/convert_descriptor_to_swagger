@@ -3,7 +3,8 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     add_request_bodies_from_descriptor,
     add_responses_from_descriptor,
     add_tags_from_descriptors,
-    add_singular_methods
+    add_singular_methods,
+    add_plural_methods
     )
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
@@ -216,81 +217,9 @@ def test_add_singular_methods():
 
     expect(swag).to(equal(expected_output))
 
-def _add_plural_methods():
+def test_add_plural_methods():
     expected_output = {
         "paths": {
-            "/credentials": {
-                "get": {
-                    "tags": [
-                        "credentials"
-                    ],
-                    "summary": "Get all items",
-                    "parameters": [
-                        {
-                            "name": "offset",
-                            "in": "query",
-                            "description": "the offset",
-                            "required": False,
-                            "style": "form",
-                            "explode": True,
-                            "schema": {
-                                "type": "integer"
-                            }
-                        },
-                        {
-                            "name": "limit",
-                            "in": "query",
-                            "description": "the limit",
-                            "required": False,
-                            "style": "form",
-                            "explode": True,
-                            "schema": {
-                                "type": "integer"
-                            }
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "ok",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/responses/AllCredentials"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "post": {
-                    "tags": [
-                        "credentials"
-                    ],
-                    "summary": "Create an item",
-                    "requestBody": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/requestBodies/Credential"
-                                }
-                            }
-                        },
-                        "required": True
-                    },
-                    "responses": {
-                        "201": {
-                            "description": "created",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/responses/Created"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "/credentials/{id}": {
                 "get": {
                     "tags": [
@@ -416,6 +345,6 @@ def _add_plural_methods():
         }
     }
 
-    # swag = _add_plural_methods('test', {})
+    swag = add_plural_methods('credential', {})
 
-    # expect(swag).to(equal(expected_output))
+    expect(swag).to(equal(expected_output))

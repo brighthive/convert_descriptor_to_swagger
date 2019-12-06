@@ -194,3 +194,138 @@ def add_singular_methods(name: str, swag: dict) -> dict:
     })
 
     return swag
+
+def add_plural_methods(name: str, swag: dict) -> dict:
+    sentence_case_name = name.capitalize()
+    lower_case_name = name.lower()
+
+    if 'paths' not in swag:
+        swag['paths'] = {}
+
+    if f'{name}' not in swag['paths']:
+        swag['paths'][f'/{name}s/{{id}}'] = {}
+
+    swag['paths'][f'/{name}s/{{id}}'].update({
+        "get": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Get one item",
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User ID",
+                    "required": True,
+                    "style": "simple",
+                    "explode": False,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "ok"
+                }
+            }
+        },
+        "put": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Put one item",
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User ID",
+                    "required": True,
+                    "style": "simple",
+                    "explode": False,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            ],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
+                        }
+                    }
+                },
+                "required": True
+            },
+            "responses": {
+                "200": {
+                    "description": "ok"
+                }
+            }
+        },
+        "delete": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Get one item",
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User ID",
+                    "required": True,
+                    "style": "simple",
+                    "explode": False,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "ok"
+                }
+            }
+        },
+        "patch": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Get one item",
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User ID",
+                    "required": True,
+                    "style": "simple",
+                    "explode": False,
+                    "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            ],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
+                        }
+                    }
+                },
+                "required": True
+            },
+            "responses": {
+                "200": {
+                    "description": "ok"
+                }
+            }
+        }
+    })
+
+    return swag
