@@ -1,11 +1,12 @@
+from convert_descriptor_to_swagger.descriptor_tasks import add_schemas_from_descriptor
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
 
-def add_schemas_from_descriptor():
+def test_add_schemas_from_descriptor():
     expected_output = {
         "components": {
             "schemas": {
-                "Credential": {
+                "Test": {
                     "required": [
                         "name"
                     ],
@@ -20,18 +21,18 @@ def add_schemas_from_descriptor():
                         "name": {
                             "type": "string",
                             "description": "...",
-                            "example": "Credential 1"
+                            "example": "Test 1"
                         }
                     },
                     "description": "..."
                 },
-                "AllCredentials": {
+                "AllTests": {
                     "type": "object",
                     "properties": {
-                        "credentials": {
+                        "tests": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/components/schemas/Credential"
+                                "$ref": "#/components/schemas/Test"
                             }
                         },
                         "links": {
@@ -47,6 +48,6 @@ def add_schemas_from_descriptor():
         }
     }
 
-    swag = add_schemas_from_descriptor({})
+    swag = add_schemas_from_descriptor('test', {})
 
     expect(swag).to(equal(expected_output))
