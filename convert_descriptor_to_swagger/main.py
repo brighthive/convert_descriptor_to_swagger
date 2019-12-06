@@ -1,5 +1,11 @@
-from convert_descriptor_to_swagger.base_tasks import add_metadata, add_parameters, add_base_schemas
-from convert_descriptor_to_swagger.descriptor_tasks import add_schemas_from_descriptor
+from convert_descriptor_to_swagger.base_tasks import (
+    add_metadata,
+    add_parameters,
+    add_base_schemas)
+from convert_descriptor_to_swagger.descriptor_tasks import (
+    add_schemas_from_descriptor,
+    add_request_bodies_from_descriptor,
+    add_responses_from_descriptor)
 
 
 def convert_descriptor_to_swagger(descriptor: dict) -> dict:
@@ -26,7 +32,11 @@ def process_descriptor(descriptor: dict, swag: dict) -> dict:
     swag = add_schemas_from_descriptor(name, swag)
 
     # add requestBody
+    swag = add_request_bodies_from_descriptor(name, swag)
+
     # add responses
+    swag = add_responses_from_descriptor(name, swag)
+
     # add the paths
     # add tags
     return swag

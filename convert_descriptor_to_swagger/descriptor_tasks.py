@@ -54,7 +54,7 @@ def add_schemas_from_descriptor(name: str, swag: dict) -> dict:
     return swag
 
 
-def add_request_body_from_descriptor(name: str, swag: dict) -> dict:
+def add_request_bodies_from_descriptor(name: str, swag: dict) -> dict:
     sentence_case_name = name.capitalize()
     
     if 'components' not in swag:
@@ -75,6 +75,30 @@ def add_request_body_from_descriptor(name: str, swag: dict) -> dict:
             },
             "required": True
                 }
+    })
+    
+    return swag
+
+def add_responses_from_descriptor(name: str, swag:dict) -> dict:
+    sentence_case_name = name.capitalize()
+    
+    if 'components' not in swag:
+        swag['components'] = {}
+    
+    if 'responses' not in swag['components']:
+        swag['components']['responses'] = {}
+    
+    swag['components']['responses'].update({
+        f"All{sentence_case_name}s": {
+            "description": "...",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": f"#/components/schemas/All{sentence_case_name}s"
+                    }
+                }
+            }
+        }
     })
     
     return swag
