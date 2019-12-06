@@ -1,4 +1,5 @@
 from convert_descriptor_to_swagger.base_tasks import add_metadata, add_parameters, add_base_schemas
+from convert_descriptor_to_swagger.descriptor_tasks import add_schemas_from_descriptor
 
 
 def convert_descriptor_to_swagger(descriptor: dict) -> dict:
@@ -20,49 +21,10 @@ def process_descriptor(descriptor: dict, swag: dict) -> dict:
     
     name = descriptor['datastore']['tablename']
 
+    # add all of the components
     # add schemas
-    
+    swag = add_schemas_from_descriptor(name, swag)
 
-    # "Credential": {
-    #             "required": [
-    #                 "name"
-    #             ],
-    #             "type": "object",
-    #             "properties": {
-    #                 "id": {
-    #                     "type": "integer",
-    #                     "description": "...",
-    #                     "format": "int64",
-    #                     "example": 1
-    #                 },
-    #                 "name": {
-    #                     "type": "string",
-    #                     "description": "...",
-    #                     "example": "Credential 1"
-    #                 }
-    #             },
-    #             "description": "..."
-    #         },
-    #         "AllCredentials": {
-    #             "type": "object",
-    #             "properties": {
-    #                 "credentials": {
-    #                     "type": "array",
-    #                     "items": {
-    #                         "$ref": "#/components/schemas/Credential"
-    #                     }
-    #                 },
-    #                 "links": {
-    #                     "type": "array",
-    #                     "items": {
-    #                         "$ref": "#/components/schemas/Links"
-    #                     }
-    #                 }
-    #             },
-    #             "description": "..."
-    #         },
-
-    # add the components
     # add requestBody
     # add responses
     # add the paths

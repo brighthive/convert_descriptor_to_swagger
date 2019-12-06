@@ -1,4 +1,4 @@
-from convert_descriptor_to_swagger.descriptor_tasks import add_schemas_from_descriptor
+from convert_descriptor_to_swagger.descriptor_tasks import add_schemas_from_descriptor, add_request_body_from_descriptor
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
 
@@ -49,5 +49,29 @@ def test_add_schemas_from_descriptor():
     }
 
     swag = add_schemas_from_descriptor('test', {})
+
+    expect(swag).to(equal(expected_output))
+
+
+def test_add_request_body_from_descriptor():
+    expected_output = {
+        'components': {
+            "requestBodies": {
+                "Test": {
+                    "description": "Pet object that needs to be added to the store",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Test"
+                            }
+                        }
+                    },
+                    "required": True
+                }
+            }
+        }
+    }
+
+    swag = add_request_body_from_descriptor('test', {})
 
     expect(swag).to(equal(expected_output))
