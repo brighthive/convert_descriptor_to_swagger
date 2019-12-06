@@ -14,7 +14,6 @@ def convert_descriptor_to_swagger(descriptor: dict) -> dict:
     swag = add_parameters(swag)
     swag = add_base_schemas(swag)
 
-
     # These items are added for each descriptor -- should take a list to iterate on
     swag = process_descriptor(descriptor, swag)
 

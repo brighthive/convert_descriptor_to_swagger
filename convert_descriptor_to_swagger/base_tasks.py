@@ -103,3 +103,24 @@ def add_base_schemas(swag: dict) -> dict:
     })
 
     return swag
+
+def add_base_responses(swag: dict) -> dict:
+    if 'components' not in swag:
+        swag['components'] = {}
+    
+    if 'responses' not in swag['components']:
+        swag['components']['responses'] = {}
+
+    swag['components']['responses'].update({
+        "Created": {
+            "description": "...",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/Created"
+                    }
+                }
+            }
+        }
+    })
+    return swag

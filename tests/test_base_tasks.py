@@ -1,4 +1,8 @@
-from convert_descriptor_to_swagger.base_tasks import add_metadata, add_parameters, add_base_schemas
+from convert_descriptor_to_swagger.base_tasks import (
+    add_metadata,
+    add_parameters,
+    add_base_schemas,
+    add_base_responses)
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
 
@@ -108,5 +112,28 @@ def test_add_base_schemas():
     }
 
     swag = add_base_schemas({})
+
+    expect(swag).to(equal(expected_output))
+
+
+def test_add_base_responses():
+    expected_output = {
+        'components': {
+            'responses': {
+                "Created": {
+                    "description": "...",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Created"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    swag = add_base_responses({})
 
     expect(swag).to(equal(expected_output))
