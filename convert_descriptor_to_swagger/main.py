@@ -23,18 +23,20 @@ def convert_descriptor_to_swagger(descriptor: dict) -> dict:
 def process_descriptor(descriptor: dict, swag: dict) -> dict:
     # get resource name
     assert descriptor['datastore']['tablename'] == descriptor['api']['resource'], "Expected datastore.tablename to equal api.resource"
-    
-    name = descriptor['datastore']['tablename']
+    _name = descriptor['datastore']['tablename']
 
-    # add all of the components
+    assert _name[-1].lower() == 's', f"Expected {_name} to be plural and end in an 's'."
+    singular_name = _name[0:-1] # Remove the s
+
+    # add all of the components ---
     # add schemas
-    swag = add_schemas_from_descriptor(name, swag)
+    swag = add_schemas_from_descriptor(singular_name, swag)
 
     # add requestBody
-    swag = add_request_bodies_from_descriptor(name, swag)
+    swag = add_request_bodies_from_descriptor(singular_name, swag)
 
     # add responses
-    swag = add_responses_from_descriptor(name, swag)
+    swag = add_responses_from_descriptor(singular_name, swag)
 
     # add the paths
     # add tags
