@@ -1,5 +1,5 @@
 from convert_descriptor_to_swagger import convert_descriptor_to_swagger
-from convert_descriptor_to_swagger.main import add_metadata, add_parameters, add_base_schemas, process_descriptor
+from convert_descriptor_to_swagger.main import process_descriptor
 from tests.descriptors.credentials import credentials_descriptor
 from tests.descriptors.programs import programs_descriptor
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
