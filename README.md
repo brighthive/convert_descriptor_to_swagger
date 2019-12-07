@@ -1,5 +1,5 @@
 # What is this?
-BrightHive Data Resources are set up using modified frictionless table schema descriptor files. [What is table schema?](https://frictionlessdata.io/specs/table-schema/).
+[BrightHive Data Resources](https://github.com/brighthive/data-resource-api) are set up using modified frictionless table schema descriptor files. [What is table schema?](https://frictionlessdata.io/specs/table-schema/).
 
 This package will convert your descriptor files into a swagger spec. [What is Swagger?](https://swagger.io/docs/specification/about/)
 
