@@ -83,6 +83,7 @@ def test_add_request_bodies_from_descriptor():
 
     expect(swag).to(equal(expected_output))
 
+
 def test_add_responses_from_descriptor():
     expected_output = {
         'components': {
@@ -124,6 +125,7 @@ def test_add_tags_from_descriptor():
 
     expect(swag).to(equal(expected_output))
 
+
 def test_add_tags_from_descriptor_with_items():
     expected_output = {
         "tags": [
@@ -150,6 +152,7 @@ def test_add_tags_from_descriptor_with_items():
         })
 
     expect(swag).to(equal(expected_output))
+
 
 def test_add_singular_methods():
     expected_output = {
@@ -216,6 +219,7 @@ def test_add_singular_methods():
     swag = add_singular_methods('credential', {})
 
     expect(swag).to(equal(expected_output))
+
 
 def test_add_plural_methods():
     expected_output = {
