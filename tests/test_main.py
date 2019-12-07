@@ -155,9 +155,11 @@ def test_load_desc(swagger):
         }
     }
 
+    output = convert_descriptor_to_swagger(
+        [credentials_descriptor, programs_descriptor]
+    )
 
-    output = convert_descriptor_to_swagger(credentials_descriptor)
-    print(json.dumps(output, indent=4))
+    # print(json.dumps(output, indent=4))
 
     expect(output).to(equal(expected_output))
     # Final test

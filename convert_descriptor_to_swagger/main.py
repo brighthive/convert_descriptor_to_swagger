@@ -13,21 +13,28 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     )
 
 
-def convert_descriptor_to_swagger(descriptor: dict) -> dict:
+def convert_descriptor_to_swagger(descriptors: list) -> dict:
     # First pass -- only need to add these items once
+    swag = create_base_swag()
+
+    # These items are added for each descriptor -- should take a list to iterate on
+    for descriptor in descriptors:
+        swag = process_descriptor(descriptor, swag)
+
+    return swag
+
+
+def create_base_swag() -> dict:
     swag = add_metadata()
     swag = add_parameters(swag)
     swag = add_base_schemas(swag)
     swag = add_base_responses(swag)
-
-    # These items are added for each descriptor -- should take a list to iterate on
-    swag = process_descriptor(descriptor, swag)
-
     return swag
 
 
 def process_descriptor(descriptor: dict, swag: dict) -> dict:
     # get resource name
+    print(descriptor)
     assert descriptor['datastore']['tablename'] == descriptor['api']['resource'], "Expected datastore.tablename to equal api.resource"
     _name = descriptor['datastore']['tablename']
 
