@@ -1,5 +1,3 @@
-
-
 def add_schemas_from_descriptor(name: str, swag: dict) -> dict:
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
