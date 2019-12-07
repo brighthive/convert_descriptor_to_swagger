@@ -34,7 +34,6 @@ def create_base_swag() -> dict:
 
 def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
     # get resource name
-    print(descriptor)
     assert descriptor['datastore']['tablename'] == descriptor['api']['resource'], "Expected datastore.tablename to equal api.resource"
     _name = descriptor['datastore']['tablename']
 
