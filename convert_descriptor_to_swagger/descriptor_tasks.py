@@ -1,4 +1,4 @@
-def add_schemas_from_descriptor(name: str, swag: dict) -> dict:
+def add_schemas_from_descriptor(name: str, swag: dict = {}) -> dict:
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
     
@@ -52,7 +52,7 @@ def add_schemas_from_descriptor(name: str, swag: dict) -> dict:
     return swag
 
 
-def add_request_bodies_from_descriptor(name: str, swag: dict) -> dict:
+def add_request_bodies_from_descriptor(name: str, swag: dict = {}) -> dict:
     sentence_case_name = name.capitalize()
     
     if 'components' not in swag:
@@ -101,7 +101,7 @@ def add_responses_from_descriptor(name: str, swag:dict) -> dict:
     
     return swag
 
-def add_tags_from_descriptors(name: str, swag: dict) -> dict:
+def add_tags_from_descriptors(name: str, swag: dict = {}) -> dict:
     sentence_case_name = name.capitalize()
 
     if 'tags' not in swag:
@@ -124,7 +124,7 @@ def add_tags_from_descriptors(name: str, swag: dict) -> dict:
 
     return swag
 
-def add_singular_methods(name: str, swag: dict) -> dict:
+def add_singular_methods(name: str, swag: dict = {}) -> dict:
     sentence_case_name = name.capitalize()
     lower_case_name = name.lower()
 
@@ -193,7 +193,7 @@ def add_singular_methods(name: str, swag: dict) -> dict:
 
     return swag
 
-def add_plural_methods(name: str, swag: dict) -> dict:
+def add_plural_methods(name: str, swag: dict = {}) -> dict:
     sentence_case_name = name.capitalize()
     lower_case_name = name.lower()
 
