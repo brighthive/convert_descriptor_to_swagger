@@ -173,14 +173,7 @@ def test_add_singular_methods():
                     ],
                     "responses": {
                         "200": {
-                            "description": "ok",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/responses/AllCredentials"
-                                    }
-                                }
-                            }
+                            "$ref": "#/components/responses/AllCredentials"
                         }
                     }
                 },
@@ -190,25 +183,11 @@ def test_add_singular_methods():
                     ],
                     "summary": "Create an item",
                     "requestBody": {
-                        "required": True,
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/requestBodies/Credential"
-                                }
-                            }
-                        }
+                        "$ref": "#/components/requestBodies/Credential"
                     },
                     "responses": {
                         "201": {
-                            "description": "created",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/responses/Created"
-                                    }
-                                }
-                            }
+                            "$ref": "#/components/responses/Created"
                         }
                     }
                 }
@@ -270,14 +249,7 @@ def test_add_plural_methods():
                         }
                     ],
                     "requestBody": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/requestBodies/Credential"
-                                }
-                            }
-                        },
-                        "required": True
+                        "$ref": "#/components/requestBodies/Credential"
                     },
                     "responses": {
                         "200": {
@@ -330,14 +302,7 @@ def test_add_plural_methods():
                         }
                     ],
                     "requestBody": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/requestBodies/Credential"
-                                }
-                            }
-                        },
-                        "required": True
+                        "$ref": "#/components/requestBodies/Credential"
                     },
                     "responses": {
                         "200": {

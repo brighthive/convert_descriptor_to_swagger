@@ -72,7 +72,7 @@ def add_request_bodies_from_descriptor(name: str, swag: dict = {}) -> dict:
                 }
             },
             "required": True
-                }
+        }
     })
     
     return swag
@@ -150,14 +150,7 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
             ],
             "responses": {
                 "200": {
-                    "description": "ok",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": f"#/components/responses/All{sentence_case_name}s"
-                            }
-                        }
-                    }
+                    "$ref": f"#/components/responses/All{sentence_case_name}s"
                 }
             }
         },
@@ -167,25 +160,11 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
             ],
             "summary": "Create an item",
             "requestBody": {
-                "required": True,
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
-                        }
-                    }
-                }
+                "$ref": f"#/components/requestBodies/{sentence_case_name}"
             },
             "responses": {
                 "201": {
-                    "description": "created",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/responses/Created"
-                            }
-                        }
-                    }
+                    "$ref": "#/components/responses/Created"
                 }
             }
         }
@@ -249,14 +228,7 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
                 }
             ],
             "requestBody": {
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
-                        }
-                    }
-                },
-                "required": True
+                "$ref": f"#/components/requestBodies/{sentence_case_name}"
             },
             "responses": {
                 "200": {
@@ -309,14 +281,7 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
                 }
             ],
             "requestBody": {
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": f"#/components/requestBodies/{sentence_case_name}"
-                        }
-                    }
-                },
-                "required": True
+                "$ref": f"#/components/requestBodies/{sentence_case_name}"
             },
             "responses": {
                 "200": {
