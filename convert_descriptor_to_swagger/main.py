@@ -2,7 +2,9 @@ from convert_descriptor_to_swagger.base_tasks import (
     add_metadata,
     add_parameters,
     add_base_schemas,
-    add_base_responses)
+    add_base_responses,
+    add_servers
+    )
 from convert_descriptor_to_swagger.descriptor_tasks import (
     add_schemas_from_descriptor,
     add_request_bodies_from_descriptor,
@@ -26,6 +28,7 @@ def convert_descriptor_to_swagger(descriptors: list) -> dict:
 
 def create_base_swag() -> dict:
     swag = add_metadata()
+    swag = add_servers(swag)
     swag = add_parameters(swag)
     swag = add_base_schemas(swag)
     swag = add_base_responses(swag)

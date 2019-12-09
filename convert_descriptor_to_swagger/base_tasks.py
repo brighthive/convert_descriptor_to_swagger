@@ -16,6 +16,18 @@ def add_metadata(swag: dict = {}) -> dict:
 
     return swag
 
+def add_servers(swag: dict = {}) -> dict:
+    if 'servers' not in swag:
+        swag['servers'] = []
+
+    swag['servers'].append({
+            "description": "Local server.",
+            "url": "http://localhost:8000"
+        }
+    )
+    
+    return swag
+
 
 def add_parameters(swag: dict = {}) -> dict:
     if 'components' not in swag:

@@ -2,7 +2,9 @@ from convert_descriptor_to_swagger.base_tasks import (
     add_metadata,
     add_parameters,
     add_base_schemas,
-    add_base_responses)
+    add_base_responses,
+    add_servers
+    )
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
 
@@ -25,6 +27,19 @@ def test_add_metadata():
     }
     
     swag = add_metadata()
+
+    expect(swag).to(equal(expected_output))
+
+
+def test_add_servers():
+    expected_output = {
+        "servers": [{
+            "description": "Local server.",
+            "url": "http://localhost:8000"
+        }]
+    }
+
+    swag = add_servers({})
 
     expect(swag).to(equal(expected_output))
 
