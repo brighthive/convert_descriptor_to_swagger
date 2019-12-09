@@ -4,7 +4,8 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     add_responses_from_descriptor,
     add_tags_from_descriptors,
     add_singular_methods,
-    add_plural_methods
+    add_plural_methods,
+    generate_properties_from_desc
     )
 from expects import expect, be_an, raise_error, have_property, equal, be_empty
 
@@ -317,3 +318,58 @@ def test_add_plural_methods():
     swag = add_plural_methods('credential', {})
 
     expect(swag).to(equal(expected_output))
+
+
+def test_generate_properties_from_desc():
+    descriptor = {
+        "datastore": {
+            "tablename": "tests",
+            "restricted_fields": [],
+            "schema": {
+                "fields": [
+                    {
+                    "name": "id",
+                    "title": "Test ID",
+                    "type": "integer",
+                    "description": "Test's unique identifier",
+                    "required": False
+                    },
+                    {
+                    "name": "test_name",
+                    "title": "Test Name",
+                    "type": "string",
+                    "description": "Test's Name",
+                    "required": True
+                    }
+                ],
+                "primaryKey": "id"
+            }
+        }
+    }
+
+    expected_output = {
+        'Test': {
+            "required": [
+                "test_name"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Test ID - Test's unique identifier",
+                    # "example": 1
+                },
+                "test_name": {
+                    "type": "string",
+                    "description": "Test Name - Test's Name",
+                    # "example": f"{sentence_case_name} 1"
+                }
+            },
+            "description": "..."
+        }
+    }
+
+    output = generate_properties_from_desc('test', descriptor)
+    
+    expect(output).to(equal(expected_output))

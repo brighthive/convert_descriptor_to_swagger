@@ -8,6 +8,10 @@ def add_schemas_from_descriptor(name: str, swag: dict = {}) -> dict:
     if 'schemas' not in swag['components']:
         swag['components']['schemas'] = {}
 
+    # construct each property from desc file
+    objs = generate_properties_from_desc(name, desc)
+
+    # construct from descriptor file
     swag['components']['schemas'].update({
         f"{sentence_case_name}": {
             "required": [
@@ -50,6 +54,43 @@ def add_schemas_from_descriptor(name: str, swag: dict = {}) -> dict:
     })
 
     return swag
+
+
+def generate_properties_from_desc(name: str, desc: dict) -> dict:
+    # lower_case_name = name.lower()
+    sentence_case_name = name.capitalize()
+
+    swag_output_properties = {}
+    required_fields = []
+    
+    desc_properties = desc['datastore']['schema']['fields']
+    
+    for desc_prop in desc_properties:
+        print(desc_prop)
+        swag_property = {}
+        swag_property[f'{desc_prop["name"]}'] = {}
+        thing = swag_property[f'{desc_prop["name"]}']
+        
+        thing.update({'type': desc_prop['type']})
+        if desc_prop['type'] == 'integer':
+            thing.update({'format': 'int64'})
+        
+        thing.update({'description': f'{desc_prop["title"]} - {desc_prop["description"]}'})
+
+        if desc_prop.get('required') == True:
+            required_fields.append(desc_prop['name'])
+
+        swag_output_properties.update(swag_property)
+
+    output_schema = {
+        f"{sentence_case_name}": {
+            "required": required_fields,
+            "type": "object",
+            "properties": swag_output_properties,
+            "description": "..."
+        },
+    }
+    return output_schema
 
 
 def add_request_bodies_from_descriptor(name: str, swag: dict = {}) -> dict:
