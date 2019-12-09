@@ -870,7 +870,7 @@ def test_produces_valid_swagger():
 
     swagger = convert_descriptor_to_swagger(descriptors)
 
-    # print(json.dumps(swagger, indent=4))
+    print(json.dumps(swagger, indent=4))
 
     output = validate_spec(swagger)
     expect(output).to(equal(None))

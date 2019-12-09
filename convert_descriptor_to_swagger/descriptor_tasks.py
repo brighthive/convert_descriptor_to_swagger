@@ -1,4 +1,4 @@
-def add_schemas_from_descriptor(name: str, swag: dict = {}) -> dict:
+def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
     
@@ -9,30 +9,11 @@ def add_schemas_from_descriptor(name: str, swag: dict = {}) -> dict:
         swag['components']['schemas'] = {}
 
     # construct each property from desc file
-    objs = generate_properties_from_desc(name, desc)
+    generated_properties = generate_properties_from_desc(name, desc)
 
     # construct from descriptor file
+    swag['components']['schemas'].update(generated_properties)
     swag['components']['schemas'].update({
-        f"{sentence_case_name}": {
-            "required": [
-                "name"
-            ],
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "description": "...",
-                    "format": "int64",
-                    "example": 1
-                },
-                "name": {
-                    "type": "string",
-                    "description": "...",
-                    "example": f"{sentence_case_name} 1"
-                }
-            },
-            "description": "..."
-        },
         f"All{sentence_case_name}s": {
             "type": "object",
             "properties": {
@@ -66,13 +47,16 @@ def generate_properties_from_desc(name: str, desc: dict) -> dict:
     desc_properties = desc['datastore']['schema']['fields']
     
     for desc_prop in desc_properties:
-        print(desc_prop)
         swag_property = {}
         swag_property[f'{desc_prop["name"]}'] = {}
         thing = swag_property[f'{desc_prop["name"]}']
         
-        thing.update({'type': desc_prop['type']})
-        if desc_prop['type'] == 'integer':
+        if desc_prop['type'] == 'string':
+            thing.update({'type': 'string'})
+        else:
+            thing.update({'type': 'integer'})
+
+        if desc_prop['type'] != 'string':
             thing.update({'format': 'int64'})
         
         thing.update({'description': f'{desc_prop["title"]} - {desc_prop["description"]}'})

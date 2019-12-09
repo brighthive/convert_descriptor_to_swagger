@@ -8,6 +8,8 @@ pytest = "*"
 pylint = "*"
 expects = "*"
 openapi-spec-validator = "*"
+coverage = "*"
+pytest-cov = "*"
 
 [packages]
 pyyaml = "*"

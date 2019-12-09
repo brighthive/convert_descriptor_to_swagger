@@ -16,20 +16,20 @@ def test_add_schemas_from_descriptor():
             "schemas": {
                 "Test": {
                     "required": [
-                        "name"
+                        "test_name"
                     ],
                     "type": "object",
                     "properties": {
                         "id": {
                             "type": "integer",
-                            "description": "...",
                             "format": "int64",
-                            "example": 1
+                            "description": "Test ID - Test's unique identifier",
+                            # "example": 1
                         },
-                        "name": {
+                        "test_name": {
                             "type": "string",
-                            "description": "...",
-                            "example": "Test 1"
+                            "description": "Test Name - Test's Name"
+                            # "example": "Test 1"
                         }
                     },
                     "description": "..."
@@ -56,7 +56,65 @@ def test_add_schemas_from_descriptor():
         }
     }
 
-    swag = add_schemas_from_descriptor('test', {})
+    descriptor = {
+        "api": {
+            "resource": "tests",
+            "methods": [
+            {
+                "get": {
+                "enabled": True,
+                "secured": False,
+                "grants": ["get:users"]
+                },
+                "post": {
+                "enabled": True,
+                "secured": False,
+                "grants": []
+                },
+                "put": {
+                "enabled": True,
+                "secured": False,
+                "grants": []
+                },
+                "patch": {
+                "enabled": True,
+                "secured": False,
+                "grants": []
+                },
+                "delete": {
+                "enabled": True,
+                "secured": False,
+                "grants": []
+                }
+            }
+            ]
+        },
+        "datastore": {
+            "tablename": "tests",
+            "restricted_fields": [],
+            "schema": {
+            "fields": [
+                {
+                "name": "id",
+                "title": "Test ID",
+                "type": "integer",
+                "description": "Test's unique identifier",
+                "required": False
+                },
+                {
+                "name": "test_name",
+                "title": "Test Name",
+                "type": "string",
+                "description": "Test's Name",
+                "required": True
+                }
+            ],
+            "primaryKey": "id"
+            }
+        }
+    }
+
+    swag = add_schemas_from_descriptor('test', descriptor)
 
     expect(swag).to(equal(expected_output))
 
@@ -371,5 +429,5 @@ def test_generate_properties_from_desc():
     }
 
     output = generate_properties_from_desc('test', descriptor)
-    
+
     expect(output).to(equal(expected_output))

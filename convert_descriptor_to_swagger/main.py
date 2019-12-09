@@ -45,7 +45,7 @@ def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
 
     # add all of the components ---
     # add schemas
-    swag = add_schemas_from_descriptor(singular_name, swag)
+    swag = add_schemas_from_descriptor(singular_name, descriptor, swag)
 
     # add requestBody
     swag = add_request_bodies_from_descriptor(singular_name, swag)
