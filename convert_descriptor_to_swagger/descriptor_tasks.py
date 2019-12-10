@@ -1,3 +1,6 @@
+from convert_descriptor_to_swagger.util import TABLESCHEMA_TO_SWAGGER_TYPES
+
+
 def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
@@ -51,11 +54,9 @@ def generate_properties_from_desc(name: str, desc: dict) -> dict:
         swag_property[f'{desc_prop["name"]}'] = {}
         thing = swag_property[f'{desc_prop["name"]}']
         
-        if desc_prop['type'] == 'string':
-            thing.update({'type': 'string'})
-        else:
-            thing.update({'type': 'integer'})
-
+        swagger_type = TABLESCHEMA_TO_SWAGGER_TYPES[desc_prop['type']]
+        thing.update({'type': swagger_type})
+        
         if desc_prop['type'] != 'string':
             thing.update({'format': 'int64'})
         
