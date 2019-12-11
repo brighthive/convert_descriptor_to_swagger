@@ -170,7 +170,7 @@ def test_add_tags_from_descriptor():
     expected_output = {
         "tags": [
             {
-                "name": "Test",
+                "name": "tests",
                 "description": "...",
                 "externalDocs": {
                     "description": "Find out more",
@@ -189,10 +189,10 @@ def test_add_tags_from_descriptor_with_items():
     expected_output = {
         "tags": [
             {
-                "name": "test"
+                "name": "test1"
             },
             {
-                "name": "Test",
+                "name": "tests",
                 "description": "...",
                 "externalDocs": {
                     "description": "Find out more",
@@ -205,7 +205,7 @@ def test_add_tags_from_descriptor_with_items():
     swag = add_tags_from_descriptors('test', {
         "tags": [
             {
-                "name": "test"
+                "name": "test1"
             }
         ]
         })
