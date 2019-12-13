@@ -1,175 +1,152 @@
 openapi: 3.0.0
 info:
-  title: Swagger Data Resource
   description: |
     Example Data Resource API swagger file.  You can find
     out more about Swagger at
     [http://swagger.io](http://swagger.io) or on
     [irc.freenode.net, #swagger](http://swagger.io/irc/).
-  termsOfService: http://swagger.io/terms/
+  version: "1.0.0"
+  title: Swagger Data Resource
+  termsOfService: 'http://swagger.io/terms/'
   contact:
     email: engineering@brighthive.io
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-- url: https://virtserver.swaggerhub.com/loganripplinger/test_dr_swagger/1.0.0
-  description: SwaggerHub API Auto Mocking
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/loganripplinger/test_dr_swagger/1.0.0
 tags:
-- name: Credential
-  description: '...'
-  externalDocs:
-    description: Find out more
-    url: http://swagger.io
-- name: Programs
-  description: '...'
+  - name: Credential
+    description: ...
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Programs
+    description: ...
+
 paths:
   /credentials:
     get:
       tags:
-      - credentials
+        - credentials
       summary: Get all items
       parameters:
-      - name: offset
-        in: query
-        description: the offset
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        description: the limit
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
-        "200":
-          description: ok
+        '200':
+          description: 'ok'
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/AllCredentials'
+
     post:
       tags:
-      - credentials
+        - credentials
       summary: Create an item
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/requestBodies/Credential'
-        required: true
       responses:
-        "201":
-          description: created
+        '201':
+          description: 'created'
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/Created'
+  
   /credentials/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: integer
+          format: int64
     get:
       tags:
-      - credentials
+        - credentials
       summary: Get one item
-      parameters:
-      - name: id
-        in: path
-        description: User ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
       responses:
-        "200":
-          description: ok
+        '200':
+          description: 'ok'
     put:
       tags:
-      - credentials
+        - credentials
       summary: Put one item
-      parameters:
-      - name: id
-        in: path
-        description: User ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/requestBodies/Credential'
-        required: true
       responses:
-        "200":
-          description: ok
-    delete:
-      tags:
-      - credentials
-      summary: Get one item
-      parameters:
-      - name: id
-        in: path
-        description: User ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: ok
+        '200':
+          description: 'ok'
     patch:
       tags:
-      - credentials
+        - credentials
       summary: Get one item
-      parameters:
-      - name: id
-        in: path
-        description: User ID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int64
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/requestBodies/Credential'
-        required: true
       responses:
-        "200":
-          description: ok
+        '200':
+          description: 'ok'
+    delete:
+      tags:
+        - credentials
+      summary: Get one item
+      responses:
+        '200':
+          description: 'ok'
+    
 components:
+  parameters:
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+      description: the offset
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+      description: the limit
+    
   schemas:
     Credential:
-      required:
-      - name
+      description: ...
       type: object
+      required:
+        - name
       properties:
         id:
           type: integer
-          description: '...'
           format: int64
+          description: ...
           example: 1
         name:
           type: string
-          description: '...'
+          description: ...
           example: Credential 1
-      description: '...'
+
     AllCredentials:
+      description: ...
       type: object
       properties:
         credentials:
@@ -180,74 +157,59 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Links'
-      description: '...'
+            
     Links:
+      description: ...
       type: object
       properties:
         rel:
           type: string
-          description: '...'
-          example: first
           enum:
-          - self
-          - first
-          - prev
-          - next
-          - last
+            - self
+            - first
+            - prev
+            - next
+            - last
+          description: ...
+          example: first
         href:
           type: string
-          description: '...'
-          example: /credentials?offset=0&limit=20
-      description: '...'
+          example: "/credentials?offset=0&limit=20"
+          description: ...
+    
     Created:
       type: object
       properties:
         message:
           type: string
-          description: '...'
-          example: Successfully added new resource.
+          example: "Successfully added new resource."
+          description: ...
         id:
           type: integer
-          description: '...'
           format: int64
+          description: ...
           example: 1
-  responses:
-    AllCredentials:
-      description: '...'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AllCredentials'
-    Created:
-      description: '...'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Created'
-  parameters:
-    offsetParam:
-      name: offset
-      in: query
-      description: the offset
-      required: false
-      style: form
-      explode: true
-      schema:
-        type: integer
-    limitParam:
-      name: limit
-      in: query
-      description: the limit
-      required: false
-      style: form
-      explode: true
-      schema:
-        type: integer
+
   requestBodies:
     Credential:
       description: Pet object that needs to be added to the store
+      required: true
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Credential'
-      required: true
+  
+  responses:
+    AllCredentials:
+      description: ...
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllCredentials'
+
+    Created:
+      description: ...
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Created'
