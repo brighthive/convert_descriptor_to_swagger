@@ -20,6 +20,11 @@ def add_servers(swag: dict = {}) -> dict:
     if 'servers' not in swag:
         swag['servers'] = []
 
+    for server in swag['servers']:
+        if server['description'] == "Local server." and \
+            server['url'] == "http://localhost:8000":
+            return swag
+
     swag['servers'].append({
             "description": "Local server.",
             "url": "http://localhost:8000"
