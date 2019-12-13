@@ -1,11 +1,8 @@
 from convert_descriptor_to_swagger import convert_descriptor_to_swagger
-# from convert_descriptor_to_swagger.main import process_descriptor
-# from tests.descriptors.credentials import credentials_descriptor
-# from tests.descriptors.programs import programs_descriptor
-from expects import expect, be_an, raise_error, have_property, equal, be_empty
-import json
-from openapi_spec_validator import validate_spec
 from deepdiff import DeepDiff
+from expects import expect, be_an, raise_error, have_property, equal, be_empty
+from openapi_spec_validator import validate_spec
+import json
 
 
 def test_load_desc(swagger):
@@ -732,8 +729,8 @@ def test_produces_valid_swagger():
     descriptors = [programs_descriptor, credentials_descriptor]
 
     swagger = convert_descriptor_to_swagger(descriptors)
-    print(json.dumps(swagger, indent=4))
-    
+    # print(json.dumps(swagger, indent=4))
+
     output = validate_spec(swagger)
     expect(output).to(equal(None))
     
