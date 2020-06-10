@@ -5,7 +5,7 @@ from openapi_spec_validator import validate_spec
 import json
 
 
-def test_load_desc(swagger):
+def test_load_desc():
     expected_output = {
         "openapi": "3.0.0",
         "info": {
@@ -318,9 +318,28 @@ def test_load_desc(swagger):
                         }
                     }
                 }
+            },
+            "/credentials/query": {
+                "post": {
+                    "tags": [
+                        "credentials"
+                    ],
+                    "summary": "Query for items.",
+                    "requestBody": {
+                        "$ref": "#/components/requestBodies/Credential"
+                    },
+                    "responses": {
+                        "201": {
+                            "$ref": "#/components/responses/Created"
+                        }
+                    }
+                }
             }
         }
     }
+
+    output = validate_spec(expected_output)
+    expect(output).to(equal(None))
 
 
     credentials_descriptor = {
