@@ -27,7 +27,7 @@ def convert_descriptor_to_swagger(descriptors: list) -> dict:
 
 
 def create_base_swag() -> dict:
-    swag = add_metadata()
+    swag = add_metadata({})
     swag = add_servers(swag)
     swag = add_parameters(swag)
     swag = add_base_schemas(swag)

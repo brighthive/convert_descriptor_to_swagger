@@ -213,50 +213,66 @@ def test_add_tags_from_descriptor_with_items():
     expect(swag).to(equal(expected_output))
 
 
-def test_add_singular_methods():
-    expected_output = {
-        "paths": {
-            "/credentials": {
-                "get": {
-                    "tags": [
-                        "credentials"
-                    ],
-                    "summary": "Get all items",
-                    "parameters": [
-                        {
-                            "$ref": "#/components/parameters/offsetParam"
-                        },
-                        {
-                            "$ref": "#/components/parameters/limitParam"
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "$ref": "#/components/responses/AllCredentials"
-                        }
-                    }
-                },
-                "post": {
-                    "tags": [
-                        "credentials"
-                    ],
-                    "summary": "Create an item",
-                    "requestBody": {
-                        "$ref": "#/components/requestBodies/Credential"
+add_single_expected_output = {
+    "paths": {
+        "/credentials": {
+            "get": {
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Get all items",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/offsetParam"
                     },
-                    "responses": {
-                        "201": {
-                            "$ref": "#/components/responses/Created"
-                        }
+                    {
+                        "$ref": "#/components/parameters/limitParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/AllCredentials"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Create an item",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/Credential"
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    }
+                }
+            }
+        },
+        "/credentials/query": {
+            "post": {
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Query for items.",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/Credential"
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/Created"
                     }
                 }
             }
         }
     }
+}
 
+def test_add_singular_methods():
     swag = add_singular_methods('credential', {})
 
-    expect(swag).to(equal(expected_output))
+    expect(swag).to(equal(add_single_expected_output))
 
 
 def test_add_plural_methods():
