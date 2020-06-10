@@ -196,6 +196,26 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
         }
     })
 
+    if f'{name}' not in swag['paths']:
+        swag['paths'][f'/{name}s/query'] = {}
+
+    swag['paths'][f'/{name}s/query'].update({
+        "post": {
+            "tags": [
+                f"{lower_case_name}s"
+            ],
+            "summary": "Query for items.",
+            "requestBody": {
+                "$ref": f"#/components/requestBodies/{sentence_case_name}"
+            },
+            "responses": {
+                "201": {
+                    "$ref": "#/components/responses/Created"
+                }
+            }
+        }
+    })
+
     return swag
 
 def add_plural_methods(name: str, swag: dict = {}) -> dict:
