@@ -17,10 +17,10 @@ def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
     # construct from descriptor file
     swag['components']['schemas'].update(generated_properties)
     swag['components']['schemas'].update({
-        f"All{sentence_case_name}s": {
+        f"All{sentence_case_name}": {
             "type": "object",
             "properties": {
-                f"{lower_case_name}s": {
+                f"{lower_case_name}": {
                     "type": "array",
                     "items": {
                         "$ref": f"#/components/schemas/{sentence_case_name}"
@@ -113,12 +113,12 @@ def add_responses_from_descriptor(name: str, swag:dict) -> dict:
         swag['components']['responses'] = {}
     
     swag['components']['responses'].update({
-        f"All{sentence_case_name}s": {
+        f"All{sentence_case_name}": {
             "description": "...",
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": f"#/components/schemas/All{sentence_case_name}s"
+                        "$ref": f"#/components/schemas/All{sentence_case_name}"
                     }
                 }
             }
@@ -137,7 +137,7 @@ def add_tags_from_descriptors(name: str, swag: dict = {}) -> dict:
 
     tags.append(
         {
-            "name": f"{lower_case_name}s",
+            "name": f"{lower_case_name}",
             "description": "...",
             "externalDocs": {
                 "description": "Find out more",
@@ -158,12 +158,12 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
         swag['paths'] = {}
 
     if f'{name}' not in swag['paths']:
-        swag['paths'][f'/{name}s'] = {}
+        swag['paths'][f'/{name}'] = {}
 
-    swag['paths'][f'/{name}s'].update({
+    swag['paths'][f'/{name}'].update({
         "get": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Get all items",
             "parameters": [
@@ -176,13 +176,13 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
             ],
             "responses": {
                 "200": {
-                    "$ref": f"#/components/responses/All{sentence_case_name}s"
+                    "$ref": f"#/components/responses/All{sentence_case_name}"
                 }
             }
         },
         "post": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Create an item",
             "requestBody": {
@@ -197,12 +197,12 @@ def add_singular_methods(name: str, swag: dict = {}) -> dict:
     })
 
     if f'{name}' not in swag['paths']:
-        swag['paths'][f'/{name}s/query'] = {}
+        swag['paths'][f'/{name}/query'] = {}
 
-    swag['paths'][f'/{name}s/query'].update({
+    swag['paths'][f'/{name}/query'].update({
         "post": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Query for items.",
             "requestBody": {
@@ -226,12 +226,12 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
         swag['paths'] = {}
 
     if f'{name}' not in swag['paths']:
-        swag['paths'][f'/{name}s/{{id}}'] = {}
+        swag['paths'][f'/{name}/{{id}}'] = {}
 
-    swag['paths'][f'/{name}s/{{id}}'].update({
+    swag['paths'][f'/{name}/{{id}}'].update({
         "get": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Get one item",
             "parameters": [
@@ -256,7 +256,7 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
         },
         "put": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Put one item",
             "parameters": [
@@ -284,7 +284,7 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
         },
         "delete": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Get one item",
             "parameters": [
@@ -309,7 +309,7 @@ def add_plural_methods(name: str, swag: dict = {}) -> dict:
         },
         "patch": {
             "tags": [
-                f"{lower_case_name}s"
+                f"{lower_case_name}"
             ],
             "summary": "Get one item",
             "parameters": [

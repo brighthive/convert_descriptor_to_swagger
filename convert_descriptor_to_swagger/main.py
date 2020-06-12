@@ -38,26 +38,23 @@ def create_base_swag() -> dict:
 def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
     # get resource name
     assert descriptor['datastore']['tablename'] == descriptor['api']['resource'], "Expected datastore.tablename to equal api.resource"
-    _name = descriptor['datastore']['tablename']
-
-    assert _name[-1].lower() == 's', f"Expected {_name} to be plural and end in an 's'."
-    singular_name = _name[0:-1] # Remove the s
+    table_name = descriptor['datastore']['tablename']
 
     # add all of the components ---
     # add schemas
-    swag = add_schemas_from_descriptor(singular_name, descriptor, swag)
+    swag = add_schemas_from_descriptor(table_name, descriptor, swag)
 
     # add requestBody
-    swag = add_request_bodies_from_descriptor(singular_name, swag)
+    swag = add_request_bodies_from_descriptor(table_name, swag)
 
     # add responses
-    swag = add_responses_from_descriptor(singular_name, swag)
+    swag = add_responses_from_descriptor(table_name, swag)
 
     # add tags
-    swag = add_tags_from_descriptors(singular_name, swag)
+    swag = add_tags_from_descriptors(table_name, swag)
 
     # add the paths
-    swag = add_singular_methods(singular_name, swag)
-    swag = add_plural_methods(singular_name, swag)
+    swag = add_singular_methods(table_name, swag)
+    swag = add_plural_methods(table_name, swag)
     
     return swag

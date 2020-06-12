@@ -95,7 +95,7 @@ def add_base_schemas(swag: dict = {}) -> dict:
                 "href": {
                     "type": "string",
                     "description": "...",
-                    "example": "/credentials?offset=0&limit=20"
+                    "example": "/credential?offset=0&limit=20"
                 }
             },
             "description": "..."
