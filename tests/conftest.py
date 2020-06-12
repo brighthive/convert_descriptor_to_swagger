@@ -84,7 +84,7 @@ def expected_output():
                         "href": {
                             "type": "string",
                             "description": "...",
-                            "example": "/credentials?offset=0&limit=20"
+                            "example": "/credential?offset=0&limit=20"
                         }
                     },
                     "description": "..."
@@ -123,10 +123,10 @@ def expected_output():
                     },
                     "description": "..."
                 },
-                "AllCredentials": {
+                "AllCredential": {
                     "type": "object",
                     "properties": {
-                        "credentials": {
+                        "credential": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/components/schemas/Credential"
@@ -153,12 +153,12 @@ def expected_output():
                         }
                     }
                 },
-                "AllCredentials": {
+                "AllCredential": {
                     "description": "...",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AllCredentials"
+                                "$ref": "#/components/schemas/AllCredential"
                             }
                         }
                     }
@@ -180,7 +180,7 @@ def expected_output():
         },
         "tags": [
             {
-                "name": "credentials",
+                "name": "credential",
                 "description": "...",
                 "externalDocs": {
                     "description": "Find out more",
@@ -189,10 +189,10 @@ def expected_output():
             }
         ],
         "paths": {
-            "/credentials": {
+            "/credential": {
                 "get": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get all items",
                     "parameters": [
@@ -205,13 +205,13 @@ def expected_output():
                     ],
                     "responses": {
                         "200": {
-                            "$ref": "#/components/responses/AllCredentials"
+                            "$ref": "#/components/responses/AllCredential"
                         }
                     }
                 },
                 "post": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Create an item",
                     "requestBody": {
@@ -224,10 +224,10 @@ def expected_output():
                     }
                 }
             },
-            "/credentials/{id}": {
+            "/credential/{id}": {
                 "get": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -252,7 +252,7 @@ def expected_output():
                 },
                 "put": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Put one item",
                     "parameters": [
@@ -280,7 +280,7 @@ def expected_output():
                 },
                 "delete": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -305,7 +305,7 @@ def expected_output():
                 },
                 "patch": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -332,10 +332,10 @@ def expected_output():
                     }
                 }
             },
-            "/credentials/query": {
+            "/credential/query": {
                 "post": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Query for items.",
                     "requestBody": {
@@ -354,10 +354,10 @@ def expected_output():
 
 
 @pytest.fixture
-def credentials_descriptor():
-    credentials_descriptor = {
+def credential_descriptor():
+    credential_descriptor = {
         "api": {
-            "resource": "credentials",
+            "resource": "credential",
             "methods": [
             {
                 "get": {
@@ -389,7 +389,7 @@ def credentials_descriptor():
             ]
         },
         "datastore": {
-            "tablename": "credentials",
+            "tablename": "credential",
             "restricted_fields": [],
             "schema": {
             "fields": [
@@ -412,14 +412,14 @@ def credentials_descriptor():
             }
         }
     }
-    return credentials_descriptor
+    return credential_descriptor
 
 
 @pytest.fixture
-def programs_descriptor():
-    programs_descriptor = {
+def program_descriptor():
+    program_descriptor = {
         "api": {
-            "resource": "programs",
+            "resource": "program",
             "methods": [
             {
                 "get": {
@@ -449,7 +449,7 @@ def programs_descriptor():
                 },
                 "custom": [
                 {
-                    "resource": "/programs/credentials",
+                    "resource": "/program/credential",
                     "methods": [
                     {
                         "get": {
@@ -480,7 +480,7 @@ def programs_descriptor():
             ]
         },
         "datastore": {
-            "tablename": "programs",
+            "tablename": "program",
             "restricted_fields": [],
             "schema": {
             "fields": [
@@ -674,7 +674,7 @@ def programs_descriptor():
                 {
                 "fields": ["credential_earned"],
                 "reference": {
-                    "resource": "credentials",
+                    "resource": "credential",
                     "fields": ["id"]
                 }
                 },
@@ -696,4 +696,4 @@ def programs_descriptor():
             }
         }
     }
-    return programs_descriptor
+    return program_descriptor

@@ -10,15 +10,16 @@ def test_expected_output_is_valid(expected_output):
     expect(output).to(equal(None))
 
 
-def test_load_desc(expected_output, credentials_descriptor):
+def test_load_desc(expected_output, credential_descriptor):
     output = convert_descriptor_to_swagger(
-        [credentials_descriptor]
+        [credential_descriptor]
     )
 
-    assert not DeepDiff(expected_output, output)
+    # assert not DeepDiff(expected_output, output)
+    assert expected_output == output
 
-def test_produces_valid_swagger(programs_descriptor, credentials_descriptor):
-    descriptors = [programs_descriptor, credentials_descriptor]
+def test_produces_valid_swagger(program_descriptor, credential_descriptor):
+    descriptors = [program_descriptor, credential_descriptor]
 
     swagger = convert_descriptor_to_swagger(descriptors)
     # print(json.dumps(swagger, indent=4))

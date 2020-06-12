@@ -101,7 +101,7 @@ def test_add_base_schemas():
                         "href": {
                             "type": "string",
                             "description": "...",
-                            "example": "/credentials?offset=0&limit=20"
+                            "example": "/credential?offset=0&limit=20"
                         }
                     },
                     "description": "..."

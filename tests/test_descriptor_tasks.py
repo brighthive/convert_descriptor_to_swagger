@@ -34,10 +34,10 @@ def test_add_schemas_from_descriptor():
                     },
                     "description": "..."
                 },
-                "AllTests": {
+                "AllTest": {
                     "type": "object",
                     "properties": {
-                        "tests": {
+                        "test": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/components/schemas/Test"
@@ -58,7 +58,7 @@ def test_add_schemas_from_descriptor():
 
     descriptor = {
         "api": {
-            "resource": "tests",
+            "resource": "test",
             "methods": [
             {
                 "get": {
@@ -90,7 +90,7 @@ def test_add_schemas_from_descriptor():
             ]
         },
         "datastore": {
-            "tablename": "tests",
+            "tablename": "test",
             "restricted_fields": [],
             "schema": {
             "fields": [
@@ -116,7 +116,8 @@ def test_add_schemas_from_descriptor():
 
     swag = add_schemas_from_descriptor('test', descriptor)
 
-    expect(swag).to(equal(expected_output))
+    # expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 def test_add_request_bodies_from_descriptor():
@@ -140,19 +141,19 @@ def test_add_request_bodies_from_descriptor():
 
     swag = add_request_bodies_from_descriptor('test', {})
 
-    expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 def test_add_responses_from_descriptor():
     expected_output = {
         'components': {
             "responses": {
-                "AllTests": {
+                "AllTest": {
                     "description": "...",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AllTests"
+                                "$ref": "#/components/schemas/AllTest"
                             }
                         }
                     }
@@ -163,14 +164,14 @@ def test_add_responses_from_descriptor():
 
     swag = add_responses_from_descriptor('test', {})
 
-    expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 def test_add_tags_from_descriptor():
     expected_output = {
         "tags": [
             {
-                "name": "tests",
+                "name": "test",
                 "description": "...",
                 "externalDocs": {
                     "description": "Find out more",
@@ -182,7 +183,7 @@ def test_add_tags_from_descriptor():
 
     swag = add_tags_from_descriptors('test', {})
 
-    expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 def test_add_tags_from_descriptor_with_items():
@@ -192,7 +193,7 @@ def test_add_tags_from_descriptor_with_items():
                 "name": "test1"
             },
             {
-                "name": "tests",
+                "name": "test",
                 "description": "...",
                 "externalDocs": {
                     "description": "Find out more",
@@ -210,15 +211,15 @@ def test_add_tags_from_descriptor_with_items():
         ]
         })
 
-    expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 add_single_expected_output = {
     "paths": {
-        "/credentials": {
+        "/credential": {
             "get": {
                 "tags": [
-                    "credentials"
+                    "credential"
                 ],
                 "summary": "Get all items",
                 "parameters": [
@@ -231,13 +232,13 @@ add_single_expected_output = {
                 ],
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/AllCredentials"
+                        "$ref": "#/components/responses/AllCredential"
                     }
                 }
             },
             "post": {
                 "tags": [
-                    "credentials"
+                    "credential"
                 ],
                 "summary": "Create an item",
                 "requestBody": {
@@ -250,10 +251,10 @@ add_single_expected_output = {
                 }
             }
         },
-        "/credentials/query": {
+        "/credential/query": {
             "post": {
                 "tags": [
-                    "credentials"
+                    "credential"
                 ],
                 "summary": "Query for items.",
                 "requestBody": {
@@ -272,16 +273,16 @@ add_single_expected_output = {
 def test_add_singular_methods():
     swag = add_singular_methods('credential', {})
 
-    expect(swag).to(equal(add_single_expected_output))
+    assert swag == add_single_expected_output
 
 
 def test_add_plural_methods():
     expected_output = {
         "paths": {
-            "/credentials/{id}": {
+            "/credential/{id}": {
                 "get": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -306,7 +307,7 @@ def test_add_plural_methods():
                 },
                 "put": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Put one item",
                     "parameters": [
@@ -334,7 +335,7 @@ def test_add_plural_methods():
                 },
                 "delete": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -359,7 +360,7 @@ def test_add_plural_methods():
                 },
                 "patch": {
                     "tags": [
-                        "credentials"
+                        "credential"
                     ],
                     "summary": "Get one item",
                     "parameters": [
@@ -391,13 +392,13 @@ def test_add_plural_methods():
 
     swag = add_plural_methods('credential', {})
 
-    expect(swag).to(equal(expected_output))
+    assert swag == expected_output
 
 
 def test_generate_properties_from_desc():
     descriptor = {
         "datastore": {
-            "tablename": "tests",
+            "tablename": "test",
             "restricted_fields": [],
             "schema": {
                 "fields": [
@@ -446,4 +447,4 @@ def test_generate_properties_from_desc():
 
     output = generate_properties_from_desc('test', descriptor)
 
-    expect(output).to(equal(expected_output))
+    assert output == expected_output
