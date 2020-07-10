@@ -11,6 +11,7 @@ openapi-spec-validator = "*"
 coverage = "*"
 pytest-cov = "*"
 deepdiff = "*"
+pre-commit = "*"
 
 [packages]
 pyyaml = "*"
