@@ -3,39 +3,37 @@ from deepmerge import always_merger
 
 
 def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
-    ## Given a string name, descriptor, and swagger file...
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
-
-    if "components" not in swag:
-        swag["components"] = {}
-
-    if "schemas" not in swag["components"]:
-        swag["components"]["schemas"] = {}
 
     # construct each property from desc file
     generated_properties = generate_properties_from_desc(name, desc)
 
     # construct from descriptor file
-    swag["components"]["schemas"].update(generated_properties)
-    swag["components"]["schemas"].update(
-        {
-            f"All{sentence_case_name}": {
-                "type": "object",
-                "properties": {
-                    f"{lower_case_name}": {
-                        "type": "array",
-                        "items": {"$ref": f"#/components/schemas/{sentence_case_name}"},
-                    },
-                    "links": {
-                        "type": "array",
-                        "items": {"$ref": "#/components/schemas/Links"},
+    schemas = {
+        "components": {
+            "schemas": {
+                **generated_properties,
+                f"All{sentence_case_name}": {
+                    "type": "object",
+                    "properties": {
+                        f"{lower_case_name}": {
+                            "type": "array",
+                            "items": {
+                                "$ref": f"#/components/schemas/{sentence_case_name}"
+                            },
+                        },
+                        "links": {
+                            "type": "array",
+                            "items": {"$ref": "#/components/schemas/Links"},
+                        },
                     },
                 },
             }
         }
-    )
+    }
 
+    swag = always_merger.merge(swag, schemas)
     return swag
 
 
@@ -111,26 +109,24 @@ def add_request_bodies_from_descriptor(name: str, swag: dict = {}) -> dict:
 def add_responses_from_descriptor(name: str, swag: dict) -> dict:
     sentence_case_name = name.capitalize()
 
-    if "components" not in swag:
-        swag["components"] = {}
-
-    if "responses" not in swag["components"]:
-        swag["components"]["responses"] = {}
-
-    swag["components"]["responses"].update(
-        {
-            f"All{sentence_case_name}": {
-                "description": "List of objects",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "$ref": f"#/components/schemas/All{sentence_case_name}"
+    responses = {
+        "components": {
+            "responses": {
+                f"All{sentence_case_name}": {
+                    "description": "List of objects",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": f"#/components/schemas/All{sentence_case_name}"
+                            }
                         }
-                    }
-                },
+                    },
+                }
             }
         }
-    )
+    }
+
+    swag = always_merger.merge(swag, responses)
 
     return swag
 
@@ -150,24 +146,6 @@ def add_tags_from_descriptors(name: str, swag: dict = {}) -> dict:
             }
         ]
     }
-
-    # if "tags" not in swag:
-    #     swag["tags"] = []
-
-    # tags = swag["tags"]
-
-    # tags.append(
-    #     {
-    #         "name": f"{lower_case_name}",
-    #         "description": "...",
-    #         "externalDocs": {
-    #             "description": "Find out more",
-    #             "url": "http://swagger.io",
-    #         },
-    #     }
-    # )
-
-    # swag["tags"] = tags
 
     always_merger.merge(swag, tags)
 
