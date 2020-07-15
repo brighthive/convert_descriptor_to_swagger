@@ -24,10 +24,10 @@ def expected_output():
 
 
 @pytest.fixture
-def credential_descriptor():
-    credential_descriptor = {
+def people_descriptor():
+    people_descriptor = {
         "api": {
-            "resource": "credential",
+            "resource": "people",
             "methods": [
                 {
                     "get": {"enabled": True, "secured": False, "grants": ["get:users"]},
@@ -39,37 +39,38 @@ def credential_descriptor():
             ],
         },
         "datastore": {
-            "tablename": "credential",
+            "tablename": "people",
             "restricted_fields": [],
             "schema": {
                 "fields": [
                     {
                         "name": "id",
-                        "title": "Credential ID",
+                        "title": "Person ID",
                         "type": "integer",
-                        "description": "Credential's unique identifier",
-                        "required": False,
+                        "description": "A unique identifer for person.",
+                        "constraints": {},
                     },
                     {
-                        "name": "credential_name",
-                        "title": "Credential Name",
+                        "name": "name",
+                        "title": "Person's name",
                         "type": "string",
-                        "description": "Credential's Name",
-                        "required": True,
+                        "description": "The name that a Person goes by. This is left intentionally generic.",
+                        "constraints": {},
                     },
                 ],
                 "primaryKey": "id",
             },
         },
     }
-    return credential_descriptor
+    return people_descriptor
 
 
+# TODO need to handle foreign keys?
 @pytest.fixture
-def program_descriptor():
-    program_descriptor = {
+def team_descriptor():
+    team_descriptor = {
         "api": {
-            "resource": "program",
+            "resource": "team",
             "methods": [
                 {
                     "get": {"enabled": True, "secured": False, "grants": ["get:users"]},
@@ -91,7 +92,7 @@ def program_descriptor():
                     },
                     "custom": [
                         {
-                            "resource": "/program/credential",
+                            "resource": "/people/team",
                             "methods": [
                                 {
                                     "get": {
@@ -122,179 +123,23 @@ def program_descriptor():
             ],
         },
         "datastore": {
-            "tablename": "program",
+            "tablename": "team",
             "restricted_fields": [],
             "schema": {
                 "fields": [
                     {
                         "name": "id",
-                        "title": "Program ID",
+                        "title": "Team ID",
                         "type": "integer",
-                        "description": "Program's unique identifier",
-                        "required": False,
+                        "description": "A unique identifer for team.",
+                        "constraints": {},
                     },
                     {
-                        "name": "program_name",
-                        "title": "Program Name",
+                        "name": "name",
+                        "title": "Team Name",
                         "type": "string",
-                        "description": "Program's name.",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_code",
-                        "title": "Program Code",
-                        "type": "integer",
-                        "description": "Program's Code",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_description",
-                        "title": "Program Description",
-                        "type": "string",
-                        "description": "Program's Description",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_status",
-                        "title": "Program Status",
-                        "type": "string",
-                        "description": "Program's Status",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_fees",
-                        "title": "Program Fees",
-                        "type": "number",
-                        "description": "Program's tuition fees",
-                        "required": True,
-                    },
-                    {
-                        "name": "eligibility_criteria",
-                        "title": "Eligibility Criteria",
-                        "type": "string",
-                        "description": "Program's eligibility criteria",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_url",
-                        "title": "Program URL",
-                        "type": "string",
-                        "format": "uri",
-                        "description": "Program's webpage url",
-                        "required": True,
-                    },
-                    {
-                        "name": "program_contact_phone",
-                        "title": "Program Contact Phone",
-                        "type": "string",
-                        "description": "Program's contact telephone",
-                        "required": False,
-                    },
-                    {
-                        "name": "program_contact_email",
-                        "title": "Program Contact Email",
-                        "type": "string",
-                        "format": "email",
-                        "description": "Program's contact email address",
-                        "required": False,
-                    },
-                    {
-                        "name": "languages",
-                        "title": "Languages",
-                        "type": "string",
-                        "description": "Languages the program is offered in",
-                        "required": False,
-                    },
-                    {
-                        "name": "current_intake_capacity",
-                        "title": "Current Intake Capacity",
-                        "type": "integer",
-                        "description": "Current intake capacity of the program",
-                        "required": False,
-                    },
-                    {
-                        "name": "program_offering_model",
-                        "title": "Program Offering Model",
-                        "type": "integer",
-                        "description": "The program's current offering model",
-                        "required": False,
-                    },
-                    {
-                        "name": "program_length_hours",
-                        "title": "Program Length (Hours)",
-                        "type": "number",
-                        "description": "Length of the program (in hours)",
-                        "required": False,
-                    },
-                    {
-                        "name": "program_length_weeks",
-                        "title": "Program Length (Weeks)",
-                        "type": "number",
-                        "description": "Length of the program (in weeks)",
-                        "required": False,
-                    },
-                    {
-                        "name": "program_soc",
-                        "title": "Program SOC",
-                        "type": "integer",
-                        "description": "Program SOC",
-                        "required": False,
-                    },
-                    {
-                        "name": "funding_sources",
-                        "title": "Funding Source",
-                        "type": "string",
-                        "description": "The program's funding source",
-                        "required": False,
-                    },
-                    {
-                        "name": "on_etpl",
-                        "title": "On ETPL",
-                        "type": "integer",
-                        "description": "Whether or not the student is on ETPL",
-                        "required": False,
-                    },
-                    {
-                        "name": "cost_of_books_and_supplies",
-                        "title": "Cost of Books and Supplies",
-                        "type": "number",
-                        "description": "Cost of Books and Supplies",
-                        "required": False,
-                    },
-                    {
-                        "name": "provider_id",
-                        "title": "Provider ID",
-                        "type": "integer",
-                        "description": "Foreign key for provider",
-                        "required": False,
-                    },
-                    {
-                        "name": "location_id",
-                        "title": "Provider ID",
-                        "type": "integer",
-                        "description": "Foreign key for provider",
-                        "required": False,
-                    },
-                    {
-                        "name": "credential_earned",
-                        "title": "Provider ID",
-                        "type": "integer",
-                        "description": "Foreign key for provider",
-                        "required": False,
-                    },
-                    {
-                        "name": "potential_outcome_id",
-                        "title": "Provider ID",
-                        "type": "integer",
-                        "description": "Foreign key for provider",
-                        "required": False,
-                    },
-                    {
-                        "name": "prerequisite_id",
-                        "title": "Provider ID",
-                        "type": "integer",
-                        "description": "Foreign key for provider",
-                        "required": False,
+                        "description": "The name that a Team goes by.",
+                        "constraints": {},
                     },
                 ],
                 "primaryKey": "id",

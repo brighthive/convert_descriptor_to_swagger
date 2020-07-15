@@ -55,7 +55,7 @@ component_parameters_base = {
 }
 
 # Schemas
-
+# TODO I think this needs to be added?
 component_schemas_base = {
     "components": {
         "schemas": {
@@ -225,6 +225,7 @@ component_schemas_team = {
     }
 }
 
+# TODO
 component_schemas_mn = {
     "components": {
         "schemas": {
@@ -239,6 +240,7 @@ component_schemas_mn = {
 }
 
 # Responses
+# TODO ?
 component_responses_base = {
     "components": {
         "responses": {
@@ -371,7 +373,7 @@ tags_team = {
 
 
 # Paths
-paths_people = {
+paths_people_singular = {
     "paths": {
         "/people": {
             "get": {
@@ -466,6 +468,11 @@ paths_people = {
                 },
             }
         },
+    }
+}
+
+paths_people_by_id = {
+    "paths": {
         "/people/{id}": {
             "parameters": [{"$ref": "#/components/parameters/id"}],
             "get": {
@@ -568,12 +575,12 @@ paths_people = {
                     },
                 },
             },
-        },
+        }
     }
 }
 
 
-paths_team = {
+paths_team_singular = {
     "paths": {
         "/team": {
             "get": {
@@ -668,6 +675,12 @@ paths_team = {
                 },
             }
         },
+    }
+}
+
+
+paths_team_by_id = {
+    "paths": {
         "/team/{id}": {
             "parameters": [{"$ref": "#/components/parameters/id"}],
             "get": {
@@ -770,7 +783,7 @@ paths_team = {
                     },
                 },
             },
-        },
+        }
     }
 }
 
@@ -959,8 +972,10 @@ full_output = merger(
         component_request_bodies_mn,
         tags_people,
         tags_team,
-        paths_people,
-        paths_team,
+        paths_people_singular,
+        paths_people_by_id,
+        paths_team_singular,
+        paths_team_by_id,
         paths_people_team_mn,
     ]
 )
