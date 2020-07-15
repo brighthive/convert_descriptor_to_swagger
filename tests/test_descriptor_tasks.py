@@ -12,10 +12,12 @@ from tests.reference.full_output import (
     component_responses_people,
     component_request_bodies_people,
     tags_people,
-    paths_team_singular,
-    paths_team_by_id,
+    tags_team,
+    paths_people_singular,
+    paths_people_by_id,
 )
-
+from copy import deepcopy
+from deepmerge import always_merger
 
 # TODO update
 # should generate list of required items
@@ -134,6 +136,13 @@ def test_add_tags_from_descriptor():
     swag = add_tags_from_descriptors("people", {})
     assert swag == tags_people
 
+    # Add teams to tags and ensure people is preserved
+    swag = add_tags_from_descriptors("team", swag)
+    tags_people_copy = deepcopy(tags_people)
+    people_and_team_tags = always_merger.merge(tags_people_copy, tags_team)
+
+    assert swag == people_and_team_tags
+
 
 # TODO what is this?
 # def test_add_tags_from_descriptor_with_items():
@@ -157,9 +166,9 @@ def test_add_tags_from_descriptor():
 
 def test_add_singular_methods():
     swag = add_singular_methods("people", {})
-    assert swag == paths_team_singular
+    assert swag == paths_people_singular
 
 
 def test_add_plural_methods():
     swag = add_plural_methods("people", {})
-    assert swag == paths_team_by_id
+    assert swag == paths_people_by_id

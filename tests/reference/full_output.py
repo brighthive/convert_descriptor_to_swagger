@@ -170,7 +170,7 @@ component_schemas_people = {
                     },
                     "name": {
                         "type": "string",
-                        "description": "Person's Name - The name that a Person goes by. This is left intentionally generic.",
+                        "description": "Person's name - The name that a Person goes by. This is left intentionally generic.",
                     },
                 },
             },
@@ -204,7 +204,7 @@ component_schemas_team = {
                     },
                     "name": {
                         "type": "string",
-                        "description": "Team Name - The name that a Team goes by.",
+                        "description": "Team name - The name that a Team goes by.",
                     },
                 },
             },
@@ -943,12 +943,14 @@ paths_people_team_mn = {
 
 
 from deepmerge import always_merger
+from copy import deepcopy
 
 
 def merger(items: list):
     base = {}
 
     for item in items:
+        base = deepcopy(base)
         result = always_merger.merge(base, item)
 
     return base

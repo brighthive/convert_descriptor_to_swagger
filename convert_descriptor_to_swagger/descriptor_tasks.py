@@ -1,4 +1,5 @@
 from convert_descriptor_to_swagger.util import TABLESCHEMA_TO_SWAGGER_TYPES
+from deepmerge import always_merger
 
 
 def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
@@ -85,26 +86,25 @@ def generate_properties_from_desc(name: str, desc: dict) -> dict:
 def add_request_bodies_from_descriptor(name: str, swag: dict = {}) -> dict:
     sentence_case_name = name.capitalize()
 
-    if "components" not in swag:
-        swag["components"] = {}
-
-    if "requestBodies" not in swag["components"]:
-        swag["components"]["requestBodies"] = {}
-
-    swag["components"]["requestBodies"].update(
-        {
-            f"{sentence_case_name}": {
-                "description": "Pet object that needs to be added to the store",
-                "content": {
-                    "application/json": {
-                        "schema": {"$ref": f"#/components/schemas/{sentence_case_name}"}
-                    }
-                },
-                "required": True,
+    request_bodies = {
+        "components": {
+            "requestBodies": {
+                f"{sentence_case_name}": {
+                    "description": "Object to be added",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": f"#/components/schemas/{sentence_case_name}"
+                            }
+                        }
+                    },
+                    "required": True,
+                }
             }
         }
-    )
+    }
 
+    always_merger.merge(swag, request_bodies)
     return swag
 
 
@@ -120,7 +120,7 @@ def add_responses_from_descriptor(name: str, swag: dict) -> dict:
     swag["components"]["responses"].update(
         {
             f"All{sentence_case_name}": {
-                "description": "...",
+                "description": "List of objects",
                 "content": {
                     "application/json": {
                         "schema": {
@@ -138,23 +138,38 @@ def add_responses_from_descriptor(name: str, swag: dict) -> dict:
 def add_tags_from_descriptors(name: str, swag: dict = {}) -> dict:
     lower_case_name = name.lower()
 
-    if "tags" not in swag:
-        swag["tags"] = []
+    tags = {
+        "tags": [
+            {
+                "name": f"{lower_case_name}",
+                "description": "Data Resource",
+                "externalDocs": {
+                    "description": "More info",
+                    "url": "http://example.com",
+                },
+            }
+        ]
+    }
 
-    tags = swag["tags"]
+    # if "tags" not in swag:
+    #     swag["tags"] = []
 
-    tags.append(
-        {
-            "name": f"{lower_case_name}",
-            "description": "...",
-            "externalDocs": {
-                "description": "Find out more",
-                "url": "http://swagger.io",
-            },
-        }
-    )
+    # tags = swag["tags"]
 
-    swag["tags"] = tags
+    # tags.append(
+    #     {
+    #         "name": f"{lower_case_name}",
+    #         "description": "...",
+    #         "externalDocs": {
+    #             "description": "Find out more",
+    #             "url": "http://swagger.io",
+    #         },
+    #     }
+    # )
+
+    # swag["tags"] = tags
+
+    always_merger.merge(swag, tags)
 
     return swag
 
