@@ -17,6 +17,106 @@ from tests.reference.full_output import (
 )
 
 
+# TODO update
+# should generate list of required items
+# should generate no list of required items if none are required
+# should select correct type
+
+# Helper func tests
+def test_generate_properties_from_desc_with_required():
+    required_descriptor = {
+        "datastore": {
+            "tablename": "test",
+            "restricted_fields": [],
+            "schema": {
+                "fields": [
+                    {
+                        "name": "id",
+                        "title": "Test ID",
+                        "type": "integer",
+                        "description": "Test's unique identifier",
+                        "constraints": {},
+                    },
+                    {
+                        "name": "name",
+                        "title": "Test Name",
+                        "type": "string",
+                        "description": "Test's Name",
+                        "constraints": {"required": True},
+                    },
+                ],
+                "primaryKey": "id",
+            },
+        }
+    }
+
+    expected_output = {
+        "Test": {
+            "required": ["name"],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Test ID - Test's unique identifier",
+                },
+                "name": {"type": "string", "description": "Test Name - Test's Name"},
+            },
+            "description": "...",
+        }
+    }
+
+    output = generate_properties_from_desc("test", required_descriptor)
+    assert output == expected_output
+
+
+def test_generate_properties_from_desc_without_required():
+    not_required_descriptor = {
+        "datastore": {
+            "tablename": "test",
+            "restricted_fields": [],
+            "schema": {
+                "fields": [
+                    {
+                        "name": "id",
+                        "title": "Test ID",
+                        "type": "integer",
+                        "description": "Test's unique identifier",
+                        "constraints": {},
+                    },
+                    {
+                        "name": "name",
+                        "title": "Test Name",
+                        "type": "string",
+                        "description": "Test's Name",
+                        "constraints": {},
+                    },
+                ],
+                "primaryKey": "id",
+            },
+        }
+    }
+
+    expected_output = {
+        "Test": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Test ID - Test's unique identifier",
+                },
+                "name": {"type": "string", "description": "Test Name - Test's Name"},
+            },
+            "description": "...",
+        }
+    }
+
+    output = generate_properties_from_desc("test", not_required_descriptor)
+    assert output == expected_output
+
+
+# Process tests
 def test_add_schemas_from_descriptor(people_descriptor):
     swag = add_schemas_from_descriptor("people", people_descriptor)
     assert swag == component_schemas_people
@@ -66,56 +166,3 @@ def test_add_singular_methods():
 def test_add_plural_methods():
     swag = add_plural_methods("people", {})
     assert swag == paths_team_by_id
-
-
-# TODO update
-# def test_generate_properties_from_desc():
-#     descriptor = {
-#         "datastore": {
-#             "tablename": "test",
-#             "restricted_fields": [],
-#             "schema": {
-#                 "fields": [
-#                     {
-#                         "name": "id",
-#                         "title": "Test ID",
-#                         "type": "integer",
-#                         "description": "Test's unique identifier",
-#                         "required": False,
-#                     },
-#                     {
-#                         "name": "test_name",
-#                         "title": "Test Name",
-#                         "type": "string",
-#                         "description": "Test's Name",
-#                         "required": True,
-#                     },
-#                 ],
-#                 "primaryKey": "id",
-#             },
-#         }
-#     }
-
-#     expected_output = {
-#         "Test": {
-#             "required": ["test_name"],
-#             "type": "object",
-#             "properties": {
-#                 "id": {
-#                     "type": "integer",
-#                     "format": "int64",
-#                     "description": "Test ID - Test's unique identifier",
-#                     # "example": 1
-#                 },
-#                 "test_name": {
-#                     "type": "string",
-#                     "description": "Test Name - Test's Name",
-#                     # "example": f"{sentence_case_name} 1"
-#                 },
-#             },
-#             "description": "...",
-#         }
-#     }
-
-#     output = generate_properties_from_desc("test", descriptor)
-#     assert output == expected_output
