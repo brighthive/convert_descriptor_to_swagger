@@ -62,7 +62,6 @@ def test_generate_properties_from_desc_with_required():
                 },
                 "name": {"type": "string", "description": "Test Name - Test's Name"},
             },
-            "description": "...",
         }
     }
 
@@ -89,7 +88,6 @@ def test_generate_properties_from_desc_without_required():
                         "title": "Test Name",
                         "type": "string",
                         "description": "Test's Name",
-                        "constraints": {},
                     },
                 ],
                 "primaryKey": "id",
@@ -108,7 +106,6 @@ def test_generate_properties_from_desc_without_required():
                 },
                 "name": {"type": "string", "description": "Test Name - Test's Name"},
             },
-            "description": "...",
         }
     }
 
