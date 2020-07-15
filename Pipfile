@@ -12,6 +12,7 @@ coverage = "*"
 pytest-cov = "*"
 deepdiff = "*"
 pre-commit = "*"
+deepmerge = "*"
 
 [packages]
 pyyaml = "*"
