@@ -1,4 +1,4 @@
-header = {
+metadata = {
     "openapi": "3.0.0",
     "info": {
         "title": "BrightHive Data Resource generated OpenAPI Spec 3.0",
@@ -943,7 +943,7 @@ def merger(items: list):
 
 full_output = merger(
     [
-        header,
+        metadata,
         servers,
         component_parameters_base,
         component_schemas_base,
