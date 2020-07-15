@@ -13,6 +13,12 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     add_singular_methods,
     add_plural_methods,
 )
+from convert_descriptor_to_swagger.mn_tasks import (
+    add_mn_schemas,
+    add_mn_responses,
+    add_mn_request_bodies,
+    add_mn_paths,
+)
 
 
 def convert_descriptor_to_swagger(descriptors: list, **kwags) -> dict:
@@ -66,5 +72,25 @@ def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
     # add the paths
     swag = add_singular_methods(table_name, swag)
     swag = add_plural_methods(table_name, swag)
+
+    return swag
+
+
+def process_mn(relationship: list, swag: dict = {}) -> dict:
+    # Add mn schemas
+    # component_schemas_mn
+    swag = add_mn_schemas(relationship, swag)
+
+    # Add mn responses
+    # component_responses_mn
+    swag = add_mn_responses(relationship, swag)
+
+    # Add mn request bodies
+    # component_request_bodies_mn
+    swag = add_mn_request_bodies(relationship, swag)
+
+    # Add mn paths
+    # paths_people_team_mn
+    swag = add_mn_paths(relationship, swag)
 
     return swag
