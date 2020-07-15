@@ -3,25 +3,33 @@ from convert_descriptor_to_swagger.base_tasks import (
     add_parameters,
     add_base_schemas,
     add_base_responses,
-    add_servers
-    )
+    add_servers,
+)
 from convert_descriptor_to_swagger.descriptor_tasks import (
     add_schemas_from_descriptor,
     add_request_bodies_from_descriptor,
     add_responses_from_descriptor,
     add_tags_from_descriptors,
     add_singular_methods,
-    add_plural_methods
-    )
+    add_plural_methods,
+)
 
 
-def convert_descriptor_to_swagger(descriptors: list) -> dict:
+def convert_descriptor_to_swagger(descriptors: list, **kwags) -> dict:
     # First pass -- only need to add these items once
     swag = create_base_swag()
 
     # These items are added for each descriptor -- should take a list to iterate on
     for descriptor in descriptors:
         swag = process_descriptor(descriptor, swag)
+
+    try:
+        if kwargs["relationships"]:
+            for relationship in kwargs["relationships"]:
+                # build the relationships
+                pass
+    except NameError:
+        pass
 
     return swag
 
@@ -37,8 +45,10 @@ def create_base_swag() -> dict:
 
 def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
     # get resource name
-    assert descriptor['datastore']['tablename'] == descriptor['api']['resource'], "Expected datastore.tablename to equal api.resource"
-    table_name = descriptor['datastore']['tablename']
+    # assert (
+    #     descriptor["datastore"]["tablename"] == descriptor["api"]["resource"]
+    # ), "Expected datastore.tablename to equal api.resource"
+    table_name = descriptor["datastore"]["tablename"]
 
     # add all of the components ---
     # add schemas
@@ -56,5 +66,5 @@ def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
     # add the paths
     swag = add_singular_methods(table_name, swag)
     swag = add_plural_methods(table_name, swag)
-    
+
     return swag

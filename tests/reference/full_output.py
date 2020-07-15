@@ -981,3 +981,20 @@ full_output = merger(
         paths_people_team_mn,
     ]
 )
+
+
+people_output = merger(
+    [
+        metadata,
+        servers,
+        component_parameters_base,
+        component_schemas_base,
+        component_schemas_people,
+        component_responses_base,
+        component_responses_people,
+        component_request_bodies_people,
+        tags_people,
+        paths_people_singular,
+        paths_people_by_id,
+    ]
+)

@@ -19,11 +19,6 @@ from tests.reference.full_output import full_output
 
 
 @pytest.fixture
-def expected_output():
-    return full_output
-
-
-@pytest.fixture
 def people_descriptor():
     people_descriptor = {
         "api": {
@@ -174,4 +169,4 @@ def team_descriptor():
             },
         },
     }
-    return program_descriptor
+    return team_descriptor
