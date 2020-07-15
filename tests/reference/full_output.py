@@ -225,7 +225,6 @@ component_schemas_team = {
     }
 }
 
-# TODO
 component_schemas_mn = {
     "components": {
         "schemas": {

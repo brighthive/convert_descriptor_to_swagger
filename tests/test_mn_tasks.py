@@ -16,15 +16,13 @@ from tests.reference.full_output import (
 import pytest
 
 
-@pytest.mark.xfail
 def test_add_mn_schemas():
-    swag = add_mn_schemas(["people", "team"], {})
+    swag = add_mn_schemas({})
     assert swag == component_schemas_mn
 
 
-@pytest.mark.xfail
 def test_add_mn_responses():
-    swag = add_mn_schemas(["people", "team"], {})
+    swag = add_mn_responses({})
     assert swag == component_responses_mn
 
 

@@ -31,9 +31,14 @@ def convert_descriptor_to_swagger(descriptors: list, **kwags) -> dict:
 
     try:
         if kwargs["relationships"]:
+            # Add base mn items
+            swag = add_mn_schemas(swag)
+            # Add mn responses
+            swag = add_mn_responses(relationship, swag)
+
             for relationship in kwargs["relationships"]:
-                # build the relationships
-                pass
+                swag = process_mn(relationship, swag)
+
     except NameError:
         pass
 
@@ -77,13 +82,6 @@ def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
 
 
 def process_mn(relationship: list, swag: dict = {}) -> dict:
-    # Add mn schemas
-    # component_schemas_mn
-    swag = add_mn_schemas(relationship, swag)
-
-    # Add mn responses
-    # component_responses_mn
-    swag = add_mn_responses(relationship, swag)
 
     # Add mn request bodies
     # component_request_bodies_mn

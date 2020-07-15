@@ -19,6 +19,7 @@ from tests.reference.full_output import (
 from copy import deepcopy
 from deepmerge import always_merger
 
+
 # TODO update
 # should generate list of required items
 # should generate no list of required items if none are required
