@@ -24,6 +24,7 @@ from deepmerge import always_merger
 # should generate no list of required items if none are required
 # should select correct type
 
+
 # Helper func tests
 def test_generate_properties_from_desc_with_required():
     required_descriptor = {
