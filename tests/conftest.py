@@ -131,7 +131,7 @@ def team_descriptor():
                     },
                     {
                         "name": "name",
-                        "title": "Team Name",
+                        "title": "Team name",
                         "type": "string",
                         "description": "The name that a Team goes by.",
                         "constraints": {},

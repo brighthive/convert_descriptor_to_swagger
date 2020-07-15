@@ -26,13 +26,11 @@ def test_add_mn_responses():
     assert swag == component_responses_mn
 
 
-@pytest.mark.xfail
 def test_add_mn_request_bodies():
-    swag = add_mn_request_bodies(["people", "team"], {})
+    swag = add_mn_request_bodies({})
     assert swag == component_request_bodies_mn
 
 
-@pytest.mark.xfail
 def test_add_mn_paths():
     swag = add_mn_paths(["people", "team"], {})
     assert swag == paths_people_team_mn
