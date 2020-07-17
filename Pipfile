@@ -6,15 +6,14 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pylint = "*"
-expects = "*"
 openapi-spec-validator = "*"
 coverage = "*"
 pytest-cov = "*"
-deepdiff = "*"
 pre-commit = "*"
 
 [packages]
 pyyaml = "*"
+deepmerge = "*"
 
 [requires]
 python_version = "3.7"
