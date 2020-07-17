@@ -1,6 +1,6 @@
-# convert_descriptor_to_swagger
+# Convert_descriptor_to_swagger
 
-One sentence explanation of the tool.
+This tool generates an Open API 3.0 (swagger) spec from BrightHive tableschema descriptor files!
 
 ## Motivation (Why did we build this?)
 
