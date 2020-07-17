@@ -1,21 +1,4 @@
 import pytest
-import os
-import yaml
-from convert_descriptor_to_swagger.reference.full_output import full_output
-
-
-# # I believe this was an easy way to test/actually generate real swagger docs
-# @pytest.fixture
-# def swagger():
-#     dirname = os.path.dirname(__file__)
-#     filename = os.path.join(dirname, 'swagger/dr.yaml')
-
-#     with open(filename) as file:
-#         dr_swagger = yaml.load(file, Loader=yaml.FullLoader)
-
-#         # print(json.dumps(dr_swagger, indent=4))
-
-#     return dr_swagger
 
 
 @pytest.fixture
@@ -60,7 +43,6 @@ def people_descriptor():
     return people_descriptor
 
 
-# TODO need to handle foreign keys?
 @pytest.fixture
 def team_descriptor():
     team_descriptor = {
