@@ -1,0 +1,1104 @@
+{
+  "components": {
+    "parameters": {
+      "id": {
+        "description": "Item's primary key value",
+        "explode": false,
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "schema": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "style": "simple"
+      },
+      "limitParam": {
+        "description": "Item limit value",
+        "explode": true,
+        "in": "query",
+        "name": "limit",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "style": "form"
+      },
+      "offsetParam": {
+        "description": "Offset value",
+        "explode": true,
+        "in": "query",
+        "name": "offset",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "style": "form"
+      }
+    },
+    "requestBodies": {
+      "People": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/People"
+            }
+          }
+        },
+        "description": "Object to be added",
+        "required": true
+      },
+      "Relations": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Relations"
+            }
+          }
+        },
+        "description": "A list of primary key relationships."
+      },
+      "Team": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Team"
+            }
+          }
+        },
+        "description": "Object to be added",
+        "required": true
+      }
+    },
+    "responses": {
+      "AllPeople": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllPeople"
+            }
+          }
+        },
+        "description": "List of objects"
+      },
+      "AllTeam": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllTeam"
+            }
+          }
+        },
+        "description": "List of objects"
+      },
+      "Created": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Created"
+            }
+          }
+        },
+        "description": "Successfully created an item message"
+      },
+      "Relations": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Relations"
+            }
+          }
+        },
+        "description": "A list of primary keys found in the many to many relationship"
+      }
+    },
+    "schemas": {
+      "400": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorMessage"
+          },
+          {
+            "properties": {
+              "message": {
+                "example": "Error Message"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "description": "Error"
+      },
+      "401": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorMessage"
+          },
+          {
+            "properties": {
+              "message": {
+                "example": "Access Denied"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "description": "Access Denied"
+      },
+      "405": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorMessage"
+          },
+          {
+            "properties": {
+              "message": {
+                "example": "Unimplemented delete"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "description": "Access Denied"
+      },
+      "500": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorMessage"
+          },
+          {
+            "properties": {
+              "error": {
+                "example": "Internal Server Error"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "description": "An error occured in the server"
+      },
+      "AllPeople": {
+        "properties": {
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "type": "array"
+          },
+          "people": {
+            "items": {
+              "$ref": "#/components/schemas/People"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "AllTeam": {
+        "properties": {
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/Links"
+            },
+            "type": "array"
+          },
+          "team": {
+            "items": {
+              "$ref": "#/components/schemas/Team"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "Created": {
+        "description": "Successful creation message",
+        "properties": {
+          "id": {
+            "description": "Item's primary key value",
+            "example": 1,
+            "format": "int64",
+            "type": "integer"
+          },
+          "message": {
+            "description": "Status message",
+            "example": "Successfully added new resource.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ErrorMessage": {
+        "properties": {
+          "error": {
+            "description": "A description of the error that occured",
+            "example": "Internal Server Error",
+            "type": "string"
+          }
+        }
+      },
+      "ErrorMessages": {
+        "properties": {
+          "errors": {
+            "items": {
+              "example": "Required item is missing",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        }
+      },
+      "Links": {
+        "description": "Pagination navigation links",
+        "properties": {
+          "href": {
+            "description": "URI for pagination.",
+            "example": "/credential?offset=0&limit=20",
+            "type": "string"
+          },
+          "rel": {
+            "description": "Pagination navigation page name",
+            "enum": [
+              "self",
+              "first",
+              "prev",
+              "next",
+              "last"
+            ],
+            "example": "first",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "People": {
+        "properties": {
+          "id": {
+            "description": "Person ID - A unique identifer for person.",
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "description": "Person's Name - The name that a Person goes by. This is left intentionally generic.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Relations": {
+        "description": "List of primary keys found in many to many relationship",
+        "example": [
+          1,
+          2,
+          3
+        ],
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "Team": {
+        "properties": {
+          "id": {
+            "description": "Team ID - A unique identifer for team.",
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "description": "Team Name - The name that a Team goes by.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "email": "engineering@brighthive.io"
+    },
+    "description": "Autogenerated Data Resource API OpenAPI Specification 3.0 (Swagger) file.\n\n[Learn more about BrightHive Data Resources.](https://github.com/brighthive/data-resource-generator)\n\n[Learn more about BrightHive!](https://brighthive.io)\n\nYou can find out more about Swagger at\n[http://swagger.io](http://swagger.io) or on\n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "termsOfService": "http://swagger.io/terms/",
+    "title": "BrightHive Data Resource generated OpenAPI Spec 3.0",
+    "version": "0.0.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/people": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offsetParam"
+          },
+          {
+            "$ref": "#/components/parameters/limitParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllPeople"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get all items",
+        "tags": [
+          "people"
+        ]
+      },
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/People"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Create a new item",
+        "tags": [
+          "people"
+        ]
+      }
+    },
+    "/people/query": {
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/People"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllPeople"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Query for items",
+        "tags": [
+          "people"
+        ]
+      }
+    },
+    "/people/{id}": {
+      "delete": {
+        "responses": {
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/405"
+                }
+              }
+            },
+            "description": "Unimplemented"
+          }
+        },
+        "summary": "Delete item by ID",
+        "tags": [
+          "people"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get item by ID",
+        "tags": [
+          "people"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "patch": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/People"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Update data by ID",
+        "tags": [
+          "people"
+        ]
+      },
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/People"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Replace item by ID",
+        "tags": [
+          "people"
+        ]
+      }
+    },
+    "/people/{id}/team": {
+      "get": {
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get many-to-many relationship",
+        "tags": [
+          "people"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "patch": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Relations"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Update many-to-many relationship",
+        "tags": [
+          "people"
+        ]
+      },
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Relations"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Replace many-to-many relationship",
+        "tags": [
+          "people"
+        ]
+      }
+    },
+    "/team": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offsetParam"
+          },
+          {
+            "$ref": "#/components/parameters/limitParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllTeam"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get all items",
+        "tags": [
+          "team"
+        ]
+      },
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Team"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Create a new item",
+        "tags": [
+          "team"
+        ]
+      }
+    },
+    "/team/query": {
+      "post": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Team"
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllTeam"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Query for items",
+        "tags": [
+          "team"
+        ]
+      }
+    },
+    "/team/{id}": {
+      "delete": {
+        "responses": {
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/405"
+                }
+              }
+            },
+            "description": "Unimplemented"
+          }
+        },
+        "summary": "Delete item by ID",
+        "tags": [
+          "team"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Team"
+                }
+              }
+            },
+            "description": "Success"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get item by ID",
+        "tags": [
+          "team"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "patch": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Team"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Update data by ID",
+        "tags": [
+          "team"
+        ]
+      },
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Team"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Replace item by ID",
+        "tags": [
+          "team"
+        ]
+      }
+    },
+    "/team/{id}/people": {
+      "get": {
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get many-to-many relationship",
+        "tags": [
+          "team"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "patch": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Relations"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Update many-to-many relationship",
+        "tags": [
+          "team"
+        ]
+      },
+      "put": {
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Relations"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Relations"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            },
+            "description": "Access denied"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            },
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Replace many-to-many relationship",
+        "tags": [
+          "team"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "Local server 1",
+      "url": "http://0.0.0.0:8081"
+    },
+    {
+      "description": "Local server 2",
+      "url": "http://localhost:8000"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Data Resource",
+      "externalDocs": {
+        "description": "More info",
+        "url": "http://example.com"
+      },
+      "name": "people"
+    },
+    {
+      "description": "Data Resource",
+      "externalDocs": {
+        "description": "More info",
+        "url": "http://example.com"
+      },
+      "name": "team"
+    }
+  ]
+}
