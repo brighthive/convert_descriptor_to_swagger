@@ -11,10 +11,6 @@ from convert_descriptor_to_swagger.reference.full_output import (
     paths_people_team_mn,
 )
 
-# from copy import deepcopy
-# from deepmerge import always_merger
-import pytest
-
 
 def test_add_mn_schemas():
     swag = add_mn_schemas({})
