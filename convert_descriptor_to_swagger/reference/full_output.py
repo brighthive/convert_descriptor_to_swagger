@@ -55,7 +55,6 @@ component_parameters_base = {
 }
 
 # Schemas
-# TODO I think this needs to be added?
 component_schemas_base = {
     "components": {
         "schemas": {
@@ -239,7 +238,6 @@ component_schemas_mn = {
 }
 
 # Responses
-# TODO ?
 component_responses_base = {
     "components": {
         "responses": {
@@ -941,21 +939,22 @@ paths_people_team_mn = {
 }
 
 
-from deepmerge import always_merger
-from copy import deepcopy
+# Full output
+from deepmerge import always_merger  # NOQA
+from copy import deepcopy  # NOQA
 
 
-def merger(items: list):
+def deep_merge_dictionaries(items: list):
     base = {}
 
     for item in items:
         base = deepcopy(base)
-        result = always_merger.merge(base, item)
+        always_merger.merge(base, item)
 
     return base
 
 
-full_output = merger(
+full_output = deep_merge_dictionaries(
     [
         metadata,
         servers,
@@ -982,7 +981,7 @@ full_output = merger(
 )
 
 
-people_output = merger(
+people_output = deep_merge_dictionaries(
     [
         metadata,
         servers,
