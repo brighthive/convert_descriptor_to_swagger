@@ -53,10 +53,9 @@ def create_base_swag() -> dict:
 
 
 def process_descriptor(descriptor: dict, swag: dict = {}) -> dict:
+    # TODO add validation check on file
+
     # get resource name
-    # assert (
-    #     descriptor["datastore"]["tablename"] == descriptor["api"]["resource"]
-    # ), "Expected datastore.tablename to equal api.resource"
     table_name = descriptor["datastore"]["tablename"]
 
     # add all of the components ---
