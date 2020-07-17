@@ -4,7 +4,7 @@ from convert_descriptor_to_swagger.mn_tasks import (
     add_mn_request_bodies,
     add_mn_paths,
 )
-from tests.reference.full_output import (
+from convert_descriptor_to_swagger.reference.full_output import (
     component_schemas_mn,
     component_responses_mn,
     component_request_bodies_mn,

@@ -1,6 +1,6 @@
 # from copy import deepcopy
 from deepmerge import always_merger
-from tests.reference.full_output import (
+from convert_descriptor_to_swagger.reference.full_output import (
     component_schemas_mn,
     component_responses_mn,
     component_request_bodies_mn,

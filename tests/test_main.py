@@ -1,7 +1,10 @@
 from convert_descriptor_to_swagger import convert_descriptor_to_swagger
 from openapi_spec_validator import validate_spec
 import pytest
-from tests.reference.full_output import people_output, full_output
+from convert_descriptor_to_swagger.reference.full_output import (
+    people_output,
+    full_output,
+)
 from copy import deepcopy
 
 

@@ -5,7 +5,7 @@ from convert_descriptor_to_swagger.base_tasks import (
     add_base_responses,
     add_servers,
 )
-from tests.reference.full_output import (
+from convert_descriptor_to_swagger.reference.full_output import (
     metadata,
     servers,
     component_parameters_base,

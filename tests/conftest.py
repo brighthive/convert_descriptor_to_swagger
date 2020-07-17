@@ -1,7 +1,7 @@
 import pytest
 import os
 import yaml
-from tests.reference.full_output import full_output
+from convert_descriptor_to_swagger.reference.full_output import full_output
 
 
 # # I believe this was an easy way to test/actually generate real swagger docs

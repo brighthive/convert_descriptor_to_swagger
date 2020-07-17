@@ -1,5 +1,5 @@
 from deepmerge import always_merger
-from tests.reference.full_output import (
+from convert_descriptor_to_swagger.reference.full_output import (
     metadata,
     servers,
     component_parameters_base,

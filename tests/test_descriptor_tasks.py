@@ -7,7 +7,7 @@ from convert_descriptor_to_swagger.descriptor_tasks import (
     add_plural_methods,
     generate_properties_from_desc,
 )
-from tests.reference.full_output import (
+from convert_descriptor_to_swagger.reference.full_output import (
     component_schemas_people,
     component_responses_people,
     component_request_bodies_people,
