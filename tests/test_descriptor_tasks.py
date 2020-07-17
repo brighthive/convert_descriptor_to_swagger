@@ -20,12 +20,6 @@ from copy import deepcopy
 from deepmerge import always_merger
 
 
-# TODO update
-# should generate list of required items
-# should generate no list of required items if none are required
-# should select correct type
-
-
 # Helper func tests
 def test_generate_properties_from_desc_with_required():
     required_descriptor = {
@@ -128,7 +122,6 @@ def test_add_responses_from_descriptor():
     assert swag == component_responses_people
 
 
-# TODO should handle required?
 def test_add_request_bodies_from_descriptor():
     swag = add_request_bodies_from_descriptor("people", {})
     assert swag == component_request_bodies_people
@@ -144,26 +137,6 @@ def test_add_tags_from_descriptor():
     people_and_team_tags = always_merger.merge(tags_people_copy, tags_team)
 
     assert swag == people_and_team_tags
-
-
-# TODO what is this?
-# def test_add_tags_from_descriptor_with_items():
-#     expected_output = {
-#         "tags": [
-#             {"name": "test1"},
-#             {
-#                 "name": "test",
-#                 "description": "...",
-#                 "externalDocs": {
-#                     "description": "Find out more",
-#                     "url": "http://swagger.io",
-#                 },
-#             },
-#         ]
-#     }
-
-#     swag = add_tags_from_descriptors("test", {"tags": [{"name": "test1"}]})
-#     assert swag == expected_output
 
 
 def test_add_singular_methods():
