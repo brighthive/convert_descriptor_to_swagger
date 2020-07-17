@@ -2,12 +2,12 @@ from convert_descriptor_to_swagger.util import TABLESCHEMA_TO_SWAGGER_TYPES
 from deepmerge import always_merger
 
 
-def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
+def add_schemas_from_descriptor(name: str, descriptor: dict, swag: dict = {}) -> dict:
     lower_case_name = name.lower()
     sentence_case_name = name.capitalize()
 
     # construct each property from desc file
-    generated_properties = generate_properties_from_desc(name, desc)
+    generated_properties = generate_properties_from_desc(name, descriptor)
 
     # construct from descriptor file
     schemas = {
@@ -37,31 +37,31 @@ def add_schemas_from_descriptor(name: str, desc: dict, swag: dict = {}) -> dict:
     return swag
 
 
-def generate_properties_from_desc(name: str, desc: dict) -> dict:
+def generate_properties_from_desc(name: str, descriptor: dict) -> dict:
     sentence_case_name = name.capitalize()
 
     swag_output_properties = {}
     required_fields = []
 
-    desc_properties = desc["datastore"]["schema"]["fields"]
+    desc_properties = descriptor["datastore"]["schema"]["fields"]
 
     for desc_prop in desc_properties:
         swag_property = {}
         swag_property[f'{desc_prop["name"]}'] = {}
-        thing = swag_property[f'{desc_prop["name"]}']
+        prop_node = swag_property[f'{desc_prop["name"]}']
 
         swagger_type = TABLESCHEMA_TO_SWAGGER_TYPES[desc_prop["type"]]
-        thing.update({"type": swagger_type})
+        prop_node.update({"type": swagger_type})
 
         if desc_prop["type"] != "string":
-            thing.update({"format": "int64"})
+            prop_node.update({"format": "int64"})
 
-        thing.update(
+        prop_node.update(
             {"description": f'{desc_prop["title"]} - {desc_prop["description"]}'}
         )
 
         try:
-            if desc_prop["constraints"].get("required") == True:
+            if desc_prop["constraints"].get("required") is True:
                 required_fields.append(desc_prop["name"])
         except KeyError:
             pass
