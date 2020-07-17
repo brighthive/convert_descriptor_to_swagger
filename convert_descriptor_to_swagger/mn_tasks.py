@@ -1,10 +1,8 @@
-# from copy import deepcopy
 from deepmerge import always_merger
 from convert_descriptor_to_swagger.reference.full_output import (
     component_schemas_mn,
     component_responses_mn,
     component_request_bodies_mn,
-    paths_people_team_mn,
 )
 
 
